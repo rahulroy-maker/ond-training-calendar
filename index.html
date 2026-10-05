@@ -26,6 +26,7 @@
   --bel:#8A4600; --bel-bg:#FDEBD3; --bel-dot:#E08A12;
   --pml:#2447B5; --pml-bg:#E3EAFD; --pml-dot:#3B6FE6;
 
+  --err:#B42318; --ok:#0A6660; --ok-bg:#DDF3F0;
   --shadow:0 1px 2px rgba(40,20,90,.06),0 10px 28px rgba(40,20,90,.10);
   --radius:14px;
 }
@@ -38,6 +39,7 @@
     --gen:#62E0D4; --gen-bg:#0F302D; --gen-dot:#2FC9BC;
     --bel:#FFBA5C; --bel-bg:#3A280B; --bel-dot:#F2A33A;
     --pml:#A9C0FF; --pml-bg:#1B2B5C; --pml-dot:#7C9DFF;
+    --err:#FF9C8F; --ok:#62E0D4; --ok-bg:#0F302D;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.4);
     color-scheme:dark;
   }
@@ -50,6 +52,7 @@
   --gen:#62E0D4; --gen-bg:#0F302D; --gen-dot:#2FC9BC;
   --bel:#FFBA5C; --bel-bg:#3A280B; --bel-dot:#F2A33A;
   --pml:#A9C0FF; --pml-bg:#1B2B5C; --pml-dot:#7C9DFF;
+  --err:#FF9C8F; --ok:#62E0D4; --ok-bg:#0F302D;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.4);
   color-scheme:dark;
 }
@@ -273,10 +276,75 @@ button.tbtn{appearance:none;cursor:pointer}
 .free span{color:var(--ink-2)}
 @media (max-width:420px){.free li{grid-template-columns:1fr;gap:0}}
 
+/* ---------- Attendance ---------- */
+.btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:9px 18px;border:1px solid var(--brand);border-radius:10px;background:var(--brand);color:var(--brand-ink);cursor:pointer;font:700 14.5px var(--font-body);white-space:nowrap}
+.btn:hover{filter:brightness(1.07)}
+.btn[disabled]{opacity:.65;cursor:progress}
+.btn.ghost{background:transparent;color:var(--brand-text);border-color:var(--line-strong)}
+.btn.ghost:hover{border-color:var(--brand);filter:none}
+.ncard .btn{align-self:stretch}
+.cibar{display:flex;flex-direction:column;gap:10px}
+.cibar:not(:empty){margin-bottom:22px}
+.cicard{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;padding:14px 18px;border:1px solid var(--brand);border-radius:var(--radius);background:var(--brand-soft)}
+.cilive{display:flex;align-items:center;gap:8px;margin-bottom:4px;font:700 11.5px var(--font-body);letter-spacing:.09em;text-transform:uppercase;color:var(--brand-text)}
+.cilive::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px var(--surface)}
+.cicard h3{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font:800 18px/1.3 var(--font-display)}
+.cicard p{margin-top:2px;font-size:13.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.cidone-tag{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;background:var(--ok-bg);color:var(--ok);font:700 14px var(--font-body)}
+.cinote{display:flex;flex-wrap:wrap;gap:4px 10px;padding:13px 16px;border:1px dashed var(--line-strong);border-radius:12px;font-size:14px;color:var(--ink-2)}
+.cinote b{color:var(--ink)}
+.astats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-top:18px}
+.astat{padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.astat b{display:block;font:800 26px/1 var(--font-display);font-variant-numeric:tabular-nums}
+.astat span{display:block;margin-top:6px;font-size:13px;color:var(--ink-3)}
+.alist{display:flex;flex-direction:column;gap:10px;list-style:none;padding:0;margin-top:12px}
+.acard{display:grid;grid-template-columns:56px minmax(0,1fr);gap:0 14px;align-items:start;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.acard .dateblk{grid-area:auto}
+.ahead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.ahead .trainer{margin-right:2px}
+.acount{margin-left:auto;padding:2px 10px;border-radius:999px;background:var(--brand-soft);color:var(--brand-text);font:700 13px/1.6 var(--font-body);font-variant-numeric:tabular-nums;white-space:nowrap}
+.acount.zero{background:var(--surface-2);color:var(--ink-3)}
+.ameta{margin-top:3px;font-size:13.5px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.ameta b{color:var(--ink-2);font-weight:600}
+.names{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;list-style:none;padding:0}
+.person{display:inline-flex;align-items:center;gap:7px;max-width:100%;padding:3px 11px 3px 3px;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);font:500 13.5px/1.5 var(--font-body)}
+.person>span:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.person i{flex:none;display:grid;place-items:center;width:22px;height:22px;border-radius:50%;font:800 11px/1 var(--font-display);font-style:normal}
+.person.hit{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand)}
+.pf-GenAI{background:var(--gen-bg);color:var(--gen)} .pf-BEL{background:var(--bel-bg);color:var(--bel)} .pf-PML{background:var(--pml-bg);color:var(--pml)}
+.nobody{margin-top:8px;font-size:13.5px;color:var(--ink-3)}
+.attn{font:600 12.5px var(--font-body);color:var(--ink-3);white-space:nowrap}
+.loading{margin-top:20px;color:var(--ink-3)}
+
+dialog.ci{width:min(470px,calc(100% - 24px));max-height:calc(100% - 24px);padding:0;border:1px solid var(--line);border-radius:18px;background:var(--surface);color:var(--ink);box-shadow:0 24px 60px rgba(20,8,50,.35)}
+dialog.ci::backdrop{background:rgba(18,10,40,.6)}
+.ci form{display:flex;flex-direction:column;gap:14px;padding:22px}
+.cihead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.ci h2{font:800 22px/1.2 var(--font-display);letter-spacing:-.01em}
+.xbtn{appearance:none;flex:none;display:grid;place-items:center;width:36px;height:36px;margin:-6px -6px 0 0;border:0;border-radius:10px;background:none;color:var(--ink-3);cursor:pointer}
+.xbtn:hover{background:var(--surface-2);color:var(--ink)}
+.cisess{display:flex;flex-direction:column;gap:2px;padding:11px 14px;border-radius:12px;background:var(--surface-2);font-size:14px;color:var(--ink-2)}
+.cisess b{font:700 15px var(--font-display);color:var(--ink)}
+.field>label,.field>.lbl{display:block;margin-bottom:6px;font:700 13px var(--font-body);color:var(--ink-2)}
+.field input{width:100%;min-height:46px;padding:10px 12px;border:1px solid var(--line-strong);border-radius:10px;background:var(--bg);color:var(--ink);font:500 16px var(--font-body)}
+.field input:focus{outline:2px solid var(--brand);outline-offset:0;border-color:var(--brand)}
+.field input[aria-invalid="true"]{border-color:var(--err)}
+.field input.code{max-width:180px;letter-spacing:.45em;font:800 24px/1 var(--font-display);text-align:center;font-variant-numeric:tabular-nums}
+.hint{margin-top:5px;font-size:12.5px;color:var(--ink-3)}
+.floorpick{display:flex;flex-wrap:wrap;gap:6px}
+.cimsg{font-size:14px;color:var(--err)}
+.cimsg:empty{display:none}
+.ciactions{display:flex;flex-wrap:wrap-reverse;gap:10px;justify-content:flex-end;margin-top:4px}
+.ciok{display:flex;flex-direction:column;align-items:center;gap:10px;padding:34px 22px 26px;text-align:center}
+.ciok .tick{display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:var(--ok-bg);color:var(--ok)}
+.ciok h2{margin-top:4px}
+.ciok p{max-width:34ch;color:var(--ink-2)}
+.ciok .btn{margin-top:8px;min-width:140px}
+
 .foot{padding-block:8px 40px;color:var(--ink-3);font-size:13px}
 
 @media (prefers-reduced-motion:no-preference){
-  .pill,.tab{transition:background-color .15s,border-color .15s,color .15s}
+  .pill,.tab,.btn{transition:background-color .15s,border-color .15s,color .15s}
 }
 </style>
 
@@ -311,6 +379,7 @@ button.tbtn{appearance:none;cursor:pointer}
       <div class="tabs" role="tablist" aria-label="Training plan views">
         <button class="tab" role="tab" id="tab-schedule" aria-controls="panel-schedule" data-tab="schedule" aria-selected="true">Schedule</button>
         <button class="tab" role="tab" id="tab-done" aria-controls="panel-done" data-tab="done" aria-selected="false" tabindex="-1">Completed<span class="dcount" id="donecount" hidden>0</span></button>
+        <button class="tab" role="tab" id="tab-attendance" aria-controls="panel-attendance" data-tab="attendance" aria-selected="false" tabindex="-1">Attendance</button>
         <button class="tab" role="tab" id="tab-week" aria-controls="panel-week" data-tab="week" aria-selected="false" tabindex="-1">Week view</button>
         <button class="tab" role="tab" id="tab-trainers" aria-controls="panel-trainers" data-tab="trainers" aria-selected="false" tabindex="-1">Trainers</button>
         <button class="tab" role="tab" id="tab-guide" aria-controls="panel-guide" data-tab="guide" aria-selected="false" tabindex="-1">Good to know</button>
@@ -321,6 +390,7 @@ button.tbtn{appearance:none;cursor:pointer}
   <div class="wrap">
     <section class="panel" id="panel-schedule" role="tabpanel" aria-labelledby="tab-schedule">
       <h2 class="sr">Schedule</h2>
+      <div class="cibar" id="cibar-sched"></div>
       <div class="toolbar">
         <div class="fgroup fpills" role="group" aria-label="Choose your floor"><span class="flabel">Your floor</span></div>
         <div class="fgroup" id="mpills" role="group" aria-label="Filter by month"><span class="flabel">Month</span></div>
@@ -346,6 +416,22 @@ button.tbtn{appearance:none;cursor:pointer}
       </div>
       <div class="resultline" id="doneline" aria-live="polite"></div>
       <div id="donelist"></div>
+    </section>
+
+    <section class="panel" id="panel-attendance" role="tabpanel" aria-labelledby="tab-attendance" hidden>
+      <h2 class="sr">Attendance</h2>
+      <div class="cibar" id="cibar-att"></div>
+      <div class="toolbar">
+        <div class="fgroup fpills" role="group" aria-label="Choose your floor"><span class="flabel">Your floor</span></div>
+        <div class="search">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg>
+          <label class="sr" for="aq">Find a counsellor by name</label>
+          <input id="aq" type="search" placeholder="Find a name" autocomplete="off">
+        </div>
+      </div>
+      <div id="astats"></div>
+      <div class="resultline" id="aline" aria-live="polite"></div>
+      <div id="alist"></div>
     </section>
 
     <section class="panel" id="panel-week" role="tabpanel" aria-labelledby="tab-week" hidden>
@@ -408,6 +494,32 @@ button.tbtn{appearance:none;cursor:pointer}
   </div>
 </main>
 
+
+<dialog class="ci" id="cidialog" aria-labelledby="cititle">
+  <form id="ciform" novalidate>
+    <div class="cihead">
+      <h2 id="cititle">Mark your attendance</h2>
+      <button class="xbtn" type="button" data-ciclose aria-label="Close"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
+    </div>
+    <div class="cisess" id="cisess"></div>
+    <div class="field"><label for="ciname">Full name</label><input id="ciname" name="name" autocomplete="name" autocapitalize="words" maxlength="60" required></div>
+    <div class="field"><label for="ciemail">Work email</label><input id="ciemail" name="email" type="email" autocomplete="email" inputmode="email" maxlength="100" required placeholder="you@airtribe.live"></div>
+    <div class="field"><span class="lbl" id="cifloorlbl">Your floor</span><div class="floorpick" id="cifloor" role="group" aria-labelledby="cifloorlbl"></div></div>
+    <div class="field"><label for="cicode">Session code</label><input id="cicode" name="code" class="code" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" required placeholder="····"><p class="hint">The 4-digit code your trainer shares during the session.</p></div>
+    <p class="cimsg" id="cimsg" role="alert"></p>
+    <div class="ciactions">
+      <button class="btn ghost" type="button" data-ciclose>Cancel</button>
+      <button class="btn" type="submit" id="cisubmit">Mark me present</button>
+    </div>
+  </form>
+  <div class="ciok" id="ciok" hidden>
+    <span class="tick"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+    <h2 id="ciokh">You're checked in</h2>
+    <p id="ciokp"></p>
+    <button class="btn" type="button" data-ciclose>Done</button>
+  </div>
+</dialog>
+
 <footer class="wrap foot">Airtribe · Sales Training Calendar · OND, October to December 2026</footer>
 
 <script>
@@ -424,7 +536,10 @@ var WEEK_NOTES={
   'Nov W2':'<b>Diwali week, 9 – 11 Nov.</b> No sessions on these days.',
   'Dec W4':'<b>Christmas, Fri 25 Dec.</b> No sessions that day. 28 – 31 Dec is kept free as buffer for reschedules.'
 };
-var TABS=['schedule','done','week','trainers','guide'];
+var TABS=['schedule','done','attendance','week','trainers','guide'];
+/* Attendance: check-ins go to a Google Apps Script web app that writes to the training team's Google Sheet. */
+var ATT_URL='https://script.google.com/macros/s/AKfycbxP16rkpLKwGZ-uD3QcvTDyuPQU2rJVL8QEG4YtzwOX38sXGHDBOpbjKmdaDvfSLfGpUA/exec';
+var CI_BEFORE=15,CI_AFTER=30; /* check-in opens 15 min before a session and closes 30 min after it ends */
 
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function $(id){return document.getElementById(id);}
@@ -449,6 +564,9 @@ S.forEach(function(s){
   s.range=s.time.replace(' - ',' – ');
   s.tstart=s.time.split(' - ')[0];
   s.dm=s.day+' '+fmtDM(s.d);
+  s.id='S'+(s.n<10?'0':'')+s.n;
+  s.ciOpen=new Date(s.start.getTime()-CI_BEFORE*6e4);
+  s.ciClose=new Date(s.end.getTime()+CI_AFTER*6e4);
 });
 /* Each session is Completed after its end time, In progress while it runs, Today on its day, otherwise Upcoming.
    Everything below reads this, so the page keeps itself current without being republished. */
@@ -459,6 +577,10 @@ function setClock(){
     var st=NOW>=s.end?'done':NOW>=s.start?'live':(s.d.getTime()===TODAY.getTime()?'today':'upcoming');
     if(st!==s.state){s.state=st;changed=true;}
     s.past=st==='done';
+    var ci=NOW>=s.ciOpen&&NOW<=s.ciClose;
+    if(ci!==s.ci){s.ci=ci;changed=true;}
+    var seen=NOW>=s.ciOpen;
+    if(seen!==s.seen){s.seen=seen;changed=true;}
   });
   return changed;
 }
@@ -466,7 +588,7 @@ setClock();
 var WEEKS={};
 DATA.weeks.forEach(function(w){w.of=pd(w.of);WEEKS[w.label]=w;});
 
-var state={tab:'schedule',floor:'all',month:'all',q:'',tq:'',cq:''};
+var state={tab:'schedule',floor:'all',month:'all',q:'',tq:'',cq:'',aq:''};
 try{var sf=localStorage.getItem('airtribe-roster-floor');if(sf==='all'||FLOORS.indexOf(sf)>-1)state.floor=sf;}catch(e){}
 function saveFloor(){try{localStorage.setItem('airtribe-roster-floor',state.floor);}catch(e){}}
 var smooth=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
@@ -490,10 +612,11 @@ function renderNext(){
       return '<li class="ncard'+sel+'"><div class="ncard-top"><span class="chip f-'+f+'">'+f+'</span></div><p class="ncard-date">All sessions completed</p><p class="ncard-time">Every session on this floor has taken place.</p><button class="linkbtn" type="button" data-gofloor="'+f+'">See all '+f+' sessions →</button></li>';
     }
     return '<li class="ncard'+sel+'">'+
-      '<div class="ncard-top"><span class="chip f-'+f+'">'+f+'</span><span class="rel">'+(s.state==='live'?'Happening now':relative(s.d))+'</span></div>'+
+      '<div class="ncard-top"><span class="chip f-'+f+'">'+f+'</span><span class="rel">'+(s.ci?'Check-in open':s.state==='live'?'Happening now':relative(s.d))+'</span></div>'+
       '<div><p class="ncard-date">'+s.dm+'</p><p class="ncard-time">'+s.range+' · '+s.slot+'</p></div>'+
       '<div class="ncard-who"><span class="avatar">'+esc(s.trainer.charAt(0))+'</span><div><p class="lbl">Trainer</p><p class="nm">'+esc(s.trainer)+'</p></div></div>'+
       '<div class="topics">'+s.topics.map(function(t){return '<span class="topic">'+esc(t)+'</span>';}).join('')+'</div>'+
+      (s.ci?(isChecked(s.id)?'<span class="cidone-tag">'+TICK+'You\'re checked in</span>':'<button class="btn" type="button" data-checkin="'+s.id+'">Mark attendance</button>'):'')+
       '<button class="linkbtn" type="button" data-gofloor="'+f+'">See all '+f+' sessions →</button></li>';
   }).join('');
 }
@@ -529,6 +652,7 @@ function match(s,q,skipMonth){
 function topicChips(list){return list.map(function(t){return '<span class="topic">'+esc(t)+'</span>';}).join('');}
 function sessRow(s,up){
   var tag=up?'<span class="upnext">'+(s.state==='live'?'Happening now':s.state==='today'?'Today':'Up next')+'</span>':'';
+  if(s.past&&ATT.ok){var na=attOf(s).length;tag+='<span class="attn">'+plural(na,'check-in')+'</span>';}
   var stl=s.state==='done'?'Completed':s.state==='live'?'In progress':s.status;
   return '<li class="sess'+(s.past?' is-past':'')+'">'+
     '<div class="dateblk" aria-hidden="true"><span class="dow">'+s.day+'</span><span class="dnum">'+s.d.getDate()+'</span><span class="dmon">'+MON3[s.d.getMonth()]+'</span></div>'+
@@ -675,6 +799,7 @@ function renderGuide(){
   if(allOnce)pts.push('<b>You will learn from all '+DATA.managers.length+' trainers.</b> Each trainer takes one session on every floor, so your floor hears from every trainer once.');
   pts.push('Every session covers <b>all the topics listed against that trainer</b>. See the Trainers tab for the full list.');
   pts.push('Week 1 of each month has <b>an extra session on one floor</b> ('+esc(w1)+').');
+  pts.push('<b>Mark your attendance in every session.</b> Check-in opens '+CI_BEFORE+' minutes before the start and closes '+CI_AFTER+' minutes after the end. Use the 4-digit code your trainer shares. Your record shows in the Attendance tab.');
   pts.push('<b>This calendar updates itself.</b> Each session moves to the Completed tab once it has finished, and your floor\'s next session always shows at the top.');
   $('gpoints').innerHTML=pts.map(function(p){return '<li>'+p+'</li>';}).join('');
   var counts={};
@@ -684,6 +809,160 @@ function renderGuide(){
     return '<button class="topic tbtn" type="button" data-topic="'+esc(tp)+'">'+esc(tp)+'<span class="n">'+counts[tp]+'</span></button>';
   }).join('');
 }
+
+
+/* ---------- Attendance ---------- */
+var TICK='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+var ATT={ok:false,loading:false,failed:false,at:0,data:{}};
+var ON=ATT_URL.indexOf('https://')===0;
+function attOf(s){return ATT.data[s.id]||[];}
+function lsGet(k,d){try{var v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+var checked=lsGet('airtribe-checked-in',[]);
+function isChecked(id){return checked.indexOf(id)>-1;}
+function hm(d){var h=d.getHours(),m=d.getMinutes();return (h%12||12)+':'+(m<10?'0':'')+m+' '+(h<12?'AM':'PM');}
+function loadAtt(force){
+  if(!ON||ATT.loading)return;
+  if(!force&&ATT.at&&Date.now()-ATT.at<45000)return;
+  ATT.loading=true;
+  fetch(ATT_URL,{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+    if(!j||!j.ok)throw new Error('bad');
+    ATT.data=j.sessions||{};ATT.ok=true;ATT.failed=false;ATT.at=Date.now();
+  }).catch(function(){ATT.failed=true;}).then(function(){
+    ATT.loading=false;renderAttendance();renderDone();
+  });
+}
+function ciCards(){
+  var open=S.filter(function(s){return s.ci;});
+  open.sort(function(a,b){return (b.floor===state.floor)-(a.floor===state.floor)||a.start-b.start;});
+  return open.map(function(s){
+    return '<div class="cicard"><div>'+
+      '<p class="cilive">Check-in open · closes '+hm(s.ciClose)+'</p>'+
+      '<h3><span>'+esc(s.trainer)+'</span><span class="chip f-'+s.floor+'">'+s.floor+'</span></h3>'+
+      '<p>'+s.dm+' · '+s.range+'</p></div>'+
+      (isChecked(s.id)?'<span class="cidone-tag">'+TICK+'You\'re checked in</span>':'<button class="btn" type="button" data-checkin="'+s.id+'">Mark attendance</button>')+
+    '</div>';
+  }).join('');
+}
+function renderCiBars(){
+  var cards=ON?ciCards():'';
+  $('cibar-sched').innerHTML=cards;
+  if(cards){$('cibar-att').innerHTML=cards;return;}
+  var vf=visibleFloors();
+  var nx=S.filter(function(s){return NOW<s.ciOpen&&vf.indexOf(s.floor)>-1;})[0];
+  $('cibar-att').innerHTML='<p class="cinote"><span><b>How to mark attendance:</b> check-in opens '+CI_BEFORE+' minutes before each session and closes '+CI_AFTER+' minutes after it ends. Enter the 4-digit code your trainer shares in the session.</span>'+
+    (nx?'<span>Next check-in'+(state.floor==='all'?'':' for '+state.floor)+': <b>'+nx.dm+', '+hm(nx.ciOpen)+'</b> ('+esc(nx.trainer)+', '+nx.floor+').</span>':'')+'</p>';
+}
+function renderAttendance(){
+  renderCiBars();
+  if(!ON){
+    $('astats').innerHTML='';$('aline').innerHTML='';
+    $('alist').innerHTML='<div class="empty"><p><b>Attendance is being set up.</b> Check-in will appear here once it is switched on.</p></div>';
+    return;
+  }
+  var vf=visibleFloors();
+  var seen=S.filter(function(s){return s.seen&&vf.indexOf(s.floor)>-1;}).reverse();
+  var held=seen.filter(function(s){return s.past;});
+  if(!ATT.ok){
+    $('astats').innerHTML='';$('aline').innerHTML='';
+    $('alist').innerHTML=ATT.failed
+      ?'<div class="empty"><p><b>Attendance could not be loaded.</b> Check your internet connection and try again.</p><button class="pill" type="button" data-attretry>Try again</button></div>'
+      :'<p class="loading">Loading attendance…</p>';
+    return;
+  }
+  var total=0,people={};
+  seen.forEach(function(s){attOf(s).forEach(function(a){total++;people[a.name.toLowerCase()]=1;});});
+  var heldTotal=held.reduce(function(n,s){return n+attOf(s).length;},0);
+  var avg=held.length?Math.round(heldTotal/held.length*10)/10:0;
+  var stats=[[held.length,held.length===1?'session held':'sessions held'],[total,total===1?'check-in':'check-ins'],[held.length?avg:'–','average per session'],[Object.keys(people).length,Object.keys(people).length===1?'counsellor checked in':'counsellors checked in']];
+  $('astats').innerHTML='<div class="astats">'+stats.map(function(x){return '<div class="astat"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>';}).join('')+'</div>';
+  var q=state.aq.trim().toLowerCase();
+  function hit(a){return q&&a.name.toLowerCase().indexOf(q)>-1;}
+  var rows=q?seen.filter(function(s){return attOf(s).some(hit);}):seen;
+  var upd='Updated '+hm(new Date(ATT.at))+' · <button class="linkbtn" type="button" data-attretry>Refresh</button>';
+  $('aline').innerHTML='<span>'+(q?'<b>'+rows.length+'</b> of '+seen.length+' sessions have a check-in matching “'+esc(state.aq.trim())+'”':'Showing <b>'+seen.length+'</b> '+(seen.length===1?'session':'sessions')+(state.floor==='all'?'':' on '+state.floor)+', latest first')+'</span><span>'+upd+'</span>';
+  if(!seen.length){
+    $('astats').innerHTML='';$('aline').innerHTML='';
+    var first=S.filter(function(s){return vf.indexOf(s.floor)>-1;})[0];
+    $('alist').innerHTML='<div class="empty"><p><b>No sessions have started yet.</b> Attendance for each session shows here once check-in opens. The first '+(state.floor==='all'?'':state.floor+' ')+'session is on '+first.dm+' at '+first.tstart+'.</p></div>';
+    return;
+  }
+  if(!rows.length){
+    $('alist').innerHTML='<div class="empty"><p>No check-ins match that name.</p><button class="pill" type="button" data-reset>Clear filters</button></div>';
+    return;
+  }
+  $('alist').innerHTML='<ul class="alist">'+rows.map(function(s){
+    var list=attOf(s),fc={};
+    list.forEach(function(a){fc[a.floor]=(fc[a.floor]||0)+1;});
+    var split=FLOORS.filter(function(f){return fc[f];}).map(function(f){return f+' '+fc[f];}).join(', ');
+    var st=s.state==='done'?'Completed':s.state==='live'?'In progress':'Starting soon';
+    return '<li class="acard">'+
+      '<div class="dateblk" aria-hidden="true"><span class="dow">'+s.day+'</span><span class="dnum">'+s.d.getDate()+'</span><span class="dmon">'+MON3[s.d.getMonth()]+'</span></div>'+
+      '<div><div class="ahead"><span class="sr">'+s.dm+', </span><span class="trainer">'+esc(s.trainer)+'</span><span class="chip f-'+s.floor+'">'+s.floor+'</span>'+
+        '<span class="acount'+(list.length?'':' zero')+'">'+list.length+' attended</span></div>'+
+      '<p class="ameta">'+s.range+' · <b>'+st+'</b>'+(s.ci?' · check-in open until '+hm(s.ciClose):'')+(split&&list.length?' · By floor: '+split:'')+'</p>'+
+      (list.length?'<ul class="names" aria-label="Attended">'+list.map(function(a){
+        return '<li class="person'+(hit(a)?' hit':'')+'" title="'+esc(a.floor+' · checked in '+a.at)+'"><i class="pf-'+esc(a.floor)+'" aria-hidden="true">'+esc(a.name.charAt(0).toUpperCase())+'</i><span>'+esc(a.name)+'</span></li>';
+      }).join('')+'</ul>':'<p class="nobody">'+(s.past?'No one checked in for this session.':'No one has checked in yet.')+'</p>')+
+      '</div></li>';
+  }).join('')+'</ul>';
+}
+
+/* ---------- Check-in dialog ---------- */
+var ciSess=null,ciFloor='';
+var me=lsGet('airtribe-checkin-me',{});
+(function(){
+  $('cifloor').innerHTML=FLOORS.map(function(f){return '<button class="pill" type="button" data-cifloor="'+f+'" aria-pressed="false"><span class="dot" style="background:'+FLOOR_DOT[f]+'"></span>'+f+'</button>';}).join('');
+})();
+function setCiFloor(f){ciFloor=f;qsa('[data-cifloor]').forEach(function(b){b.setAttribute('aria-pressed',String(b.getAttribute('data-cifloor')===f));});}
+function ciMsg(m,field){
+  $('cimsg').textContent=m||'';
+  ['ciname','ciemail','cicode'].forEach(function(id){$(id).removeAttribute('aria-invalid');});
+  if(field)$(field).setAttribute('aria-invalid','true');
+}
+function openCheckin(id){
+  var s=S.filter(function(x){return x.id===id;})[0];if(!s)return;
+  ciSess=s;
+  $('cisess').innerHTML='<b>'+esc(s.trainer)+' · '+s.floor+'</b><span>'+s.dm+' · '+s.range+'</span>';
+  $('ciname').value=me.name||'';$('ciemail').value=me.email||'';$('cicode').value='';
+  setCiFloor(me.floor||(state.floor!=='all'?state.floor:s.floor));
+  ciMsg('');$('ciform').hidden=false;$('ciok').hidden=true;$('cisubmit').disabled=false;$('cisubmit').textContent='Mark me present';
+  var d=$('cidialog');
+  if(d.showModal)d.showModal();else d.setAttribute('open','');
+  (me.name&&me.email?$('cicode'):$('ciname')).focus();
+}
+function closeCheckin(){var d=$('cidialog');if(d.close)d.close();else d.removeAttribute('open');}
+$('ciform').addEventListener('submit',function(e){
+  e.preventDefault();
+  var s=ciSess;if(!s)return;
+  var name=$('ciname').value.replace(/\s+/g,' ').trim(),email=$('ciemail').value.trim(),code=$('cicode').value.replace(/\D/g,'');
+  if(name.length<2)return ciMsg('Please enter your full name.','ciname');
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return ciMsg('Please enter a valid email address.','ciemail');
+  if(!ciFloor)return ciMsg('Please choose your floor.');
+  if(code.length!==4)return ciMsg('Enter the 4-digit code your trainer shared.','cicode');
+  if(!ON)return ciMsg('Attendance is not switched on yet. Please tell your trainer.');
+  var btn=$('cisubmit');btn.disabled=true;btn.textContent='Checking in…';ciMsg('');
+  fetch(ATT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({session:s.id,name:name,email:email,floor:ciFloor,code:code})})
+    .then(function(r){return r.json();})
+    .then(function(j){
+      if(j&&j.ok){
+        me={name:name,email:email,floor:ciFloor};lsSet('airtribe-checkin-me',me);
+        if(!isChecked(s.id)){checked.push(s.id);lsSet('airtribe-checked-in',checked);}
+        $('ciokh').textContent=j.already?'Already checked in':'You\'re checked in';
+        $('ciokp').textContent=(j.already?'Your attendance for this session was already saved':'Your attendance is saved')+' for '+s.trainer+'\'s session on '+s.dm+'.';
+        $('ciform').hidden=true;$('ciok').hidden=false;
+        renderNext();loadAtt(true);
+        return;
+      }
+      var f={name:'ciname',email:'ciemail',code:'cicode'}[j&&j.error];
+      ciMsg((j&&j.message)||'Something went wrong. Please try again.',f);
+      if(f)$(f).focus();
+    })
+    .catch(function(){ciMsg('Could not reach the attendance sheet. Check your internet connection and try again.');})
+    .then(function(){btn.disabled=false;btn.textContent='Mark me present';});
+});
+$('cidialog').addEventListener('close',function(){renderCiBars();});
+$('cicode').addEventListener('input',function(e){var v=e.target.value.replace(/\D/g,'').slice(0,4);if(v!==e.target.value)e.target.value=v;});
 
 /* ---------- Tabs and events ---------- */
 function setTab(id,focus){
@@ -696,9 +975,10 @@ function setTab(id,focus){
     if(on&&focus)b.focus();
   });
   TABS.forEach(function(t){$('panel-'+t).hidden=t!==id;});
+  if(id==='attendance')loadAtt(false);
   try{history.replaceState(null,'','#'+id);}catch(e){}
 }
-function refreshAll(){renderFacts();syncPills();renderSchedule();renderDone();renderNext();renderWeek();renderTrainers();renderGuide();}
+function refreshAll(){renderFacts();syncPills();renderSchedule();renderDone();renderNext();renderWeek();renderTrainers();renderGuide();renderAttendance();}
 function toTabs(){$('tabbar').scrollIntoView({behavior:smooth?'smooth':'auto',block:'start'});}
 
 document.addEventListener('click',function(e){
@@ -716,7 +996,11 @@ document.addEventListener('click',function(e){
     setTab('schedule');refreshAll();toTabs();
     return;
   }
-  if(t.hasAttribute('data-reset')){state.floor='all';state.month='all';state.q='';state.cq='';$('q').value='';$('cq').value='';saveFloor();refreshAll();}
+  if(t.hasAttribute('data-checkin')){openCheckin(t.getAttribute('data-checkin'));return;}
+  if(t.hasAttribute('data-ciclose')){closeCheckin();return;}
+  if(t.hasAttribute('data-cifloor')){setCiFloor(t.getAttribute('data-cifloor'));return;}
+  if(t.hasAttribute('data-attretry')){ATT.failed=false;renderAttendance();loadAtt(true);return;}
+  if(t.hasAttribute('data-reset')){state.floor='all';state.month='all';state.q='';state.cq='';state.aq='';$('q').value='';$('cq').value='';$('aq').value='';saveFloor();refreshAll();}
 });
 document.querySelector('.tabs').addEventListener('keydown',function(e){
   var i=TABS.indexOf(state.tab),n=null;
@@ -729,13 +1013,22 @@ document.querySelector('.tabs').addEventListener('keydown',function(e){
 $('q').addEventListener('input',function(e){state.q=e.target.value;renderSchedule();});
 $('cq').addEventListener('input',function(e){state.cq=e.target.value;renderDone();});
 $('tq').addEventListener('input',function(e){state.tq=e.target.value;renderTrainers();});
+$('aq').addEventListener('input',function(e){state.aq=e.target.value;renderAttendance();});
 
 /* ---------- Start ---------- */
 buildPills();refreshAll();
 var h=(location.hash||'').replace('#','');
 setTab(TABS.indexOf(h)>-1?h:'schedule');
-setInterval(function(){if(setClock())refreshAll();},60000);
-document.addEventListener('visibilitychange',function(){if(!document.hidden&&setClock())refreshAll();});
+loadAtt(true);
+setInterval(function(){
+  if(setClock())refreshAll();
+  if(state.tab==='attendance'||S.some(function(s){return s.ci;}))loadAtt(true);
+},60000);
+document.addEventListener('visibilitychange',function(){
+  if(document.hidden)return;
+  if(setClock())refreshAll();
+  loadAtt(false);
+});
 })();
 </script>
 
