@@ -636,7 +636,7 @@ S.forEach(function(s){
   s.id='S'+(s.n<10?'0':'')+s.n;
   s.ciOpen=new Date(s.start.getTime()-CI_BEFORE*6e4);
   s.ciClose=new Date(s.start.getTime()+CI_UNTIL*6e4);
-  s.fbClose=new Date(s.end.getTime()+FB_HOURS*36e5);
+  s.fbClose=s.fbClose0=new Date(s.end.getTime()+FB_HOURS*36e5);
 });
 /* Each session is Completed after its end time, In progress while it runs, Today on its day, otherwise Upcoming.
    Everything below reads this, so the page keeps itself current without being republished. */
@@ -1040,7 +1040,15 @@ $('cicode').addEventListener('input',function(e){var v=e.target.value.replace(/\
 
 
 /* ---------- Feedback (anonymous) ---------- */
-var FB={ok:false,loading:false,failed:false,at:0,data:{}};
+var FB={ok:false,loading:false,failed:false,at:0,data:{},windows:{}};
+/* The training team can keep a session's feedback open longer from the sheet; the script sends those dates. */
+function applyFbWindows(){
+  S.forEach(function(s){
+    var w=FB.windows[s.id],d=w?new Date(w):null;
+    s.fbClose=d&&!isNaN(d)?d:s.fbClose0;
+    s.fb=NOW>=s.start&&NOW<=s.fbClose;
+  });
+}
 var fbSent=lsGet('airtribe-fb-sent',[]);
 function fbDevice(){
   var d=lsGet('airtribe-fb-device','');
@@ -1060,7 +1068,8 @@ function loadFb(force){
   FB.loading=true;
   fetch(ATT_URL+'?view=feedback',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
     if(!j||!j.ok)throw new Error('bad');
-    FB.data=j.sessions||{};FB.ok=true;FB.failed=false;FB.at=Date.now();
+    FB.data=j.sessions||{};FB.windows=j.windows||{};FB.ok=true;FB.failed=false;FB.at=Date.now();
+    applyFbWindows();
   }).catch(function(){FB.failed=true;}).then(function(){FB.loading=false;renderFeedback();});
 }
 function fbCards(){
