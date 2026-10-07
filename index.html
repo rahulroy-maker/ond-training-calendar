@@ -368,11 +368,9 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
 .fbrow b{font:800 15px var(--font-display);color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
 .fbrow b small{font:500 11.5px var(--font-body);color:var(--ink-3)}
 @media (max-width:420px){.fbrow{grid-template-columns:96px minmax(0,1fr) 40px;gap:10px}}
-.cicard h3.sname{display:block;font:800 18px/1.3 var(--font-display);text-wrap:balance}
-.cicard p.cimeta{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:6px}
-.cimeta b{color:var(--ink);font-weight:700}
-.aname{margin-top:4px;font:700 14.5px/1.4 var(--font-body);color:var(--ink)}
-.cisess .sname{font:800 16px/1.3 var(--font-display);color:var(--ink)}
+.cicard p.sline,.aname{margin-top:3px;font:600 15px/1.4 var(--font-body);color:var(--ink)}
+.sline .slbl,.aname .slbl{margin-right:6px;font:700 11px var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
+.cisess .sline{font:600 14.5px/1.4 var(--font-body);color:var(--ink)}
 
 .foot{padding-block:8px 40px;color:var(--ink-3);font-size:13px}
 
@@ -1087,8 +1085,9 @@ function fbCards(){
     var sent=fbSent.indexOf(s.id)>-1;
     return '<div class="cicard"><div>'+
       '<p class="cilive">Feedback open · until '+dayHm(s.fbClose)+'</p>'+
-      '<h3 class="sname">'+esc(sessName(s))+'</h3>'+
-      '<p class="cimeta"><b>'+esc(s.trainer)+'</b><span class="chip f-'+s.floor+'">'+s.floor+'</span><span>'+s.dm+' · '+s.range+'</span></p></div>'+
+      '<h3><span>'+esc(s.trainer)+'</span><span class="chip f-'+s.floor+'">'+s.floor+'</span></h3>'+
+      '<p class="sline"><span class="slbl">Session</span>'+esc(sessName(s))+'</p>'+
+      '<p>'+s.dm+' · '+s.range+'</p></div>'+
       (sent?'<span class="cidone-tag">'+TICK+'Feedback sent</span>':'<button class="btn" type="button" data-feedback="'+s.id+'">Give feedback</button>')+
     '</div>';
   }).join('');
@@ -1134,7 +1133,7 @@ function renderFeedback(){
       '<div class="dateblk" aria-hidden="true"><span class="dow">'+s.day+'</span><span class="dnum">'+s.d.getDate()+'</span><span class="dmon">'+MON3[s.d.getMonth()]+'</span></div>'+
       '<div><div class="ahead"><span class="sr">'+s.dm+', </span><span class="trainer">'+esc(s.trainer)+'</span><span class="chip f-'+s.floor+'">'+s.floor+'</span>'+
         '<span class="acount'+(f.n?'':' zero')+'">'+plural(f.n,'response')+'</span></div>'+
-      '<p class="aname">'+esc(sessName(s))+'</p>'+
+      '<p class="aname"><span class="slbl">Session</span>'+esc(sessName(s))+'</p>'+
       '<p class="ameta">'+s.range+' · <b>'+st+'</b>'+(s.fb?' · feedback open until '+dayHm(s.fbClose):'')+'</p>'+
       (f.n?'<div class="fbbars">'+fbRow('Overall',f.overall)+fbRow('Trainer clarity',f.trainer)+fbRow('Usefulness',f.useful)+'</div>'
           :'<p class="nobody">'+(s.fb?'No feedback yet.':'No feedback was shared for this session.')+'</p>')+
@@ -1153,7 +1152,7 @@ function fbVal(name){var r=document.querySelector('#fbform input[name="'+name+'"
 function openFeedback(id){
   var s=S.filter(function(x){return x.id===id;})[0];if(!s)return;
   fbSess=s;
-  $('fbsess').innerHTML='<span class="sname">'+esc(sessName(s))+'</span><span>'+esc(s.trainer)+' · '+s.floor+' · '+s.dm+' · '+s.range+'</span>';
+  $('fbsess').innerHTML='<b>'+esc(s.trainer)+' · '+s.floor+'</b><span class="sline">'+esc(sessName(s))+'</span><span>'+s.dm+' · '+s.range+'</span>';
   $('fbform').reset();fbMsg('');$('fbform').hidden=false;$('fbok').hidden=true;$('fbsubmit').disabled=false;$('fbsubmit').textContent='Send feedback';
   var d=$('fbdialog');
   if(d.showModal)d.showModal();else d.setAttribute('open','');
