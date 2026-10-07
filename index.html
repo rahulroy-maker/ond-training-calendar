@@ -343,6 +343,32 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
 .ciok p{max-width:34ch;color:var(--ink-2)}
 .ciok .btn{margin-top:8px;min-width:140px}
 
+/* ---------- Feedback ---------- */
+#fbdialog{overflow:auto}
+.anon{display:flex;align-items:flex-start;gap:8px;padding:10px 12px;border-radius:10px;background:var(--ok-bg);color:var(--ok);font:600 13.5px/1.45 var(--font-body)}
+.anon svg{flex:none;margin-top:1px}
+.rate{min-width:0;margin:0;padding:0;border:0}
+.rate legend{margin-bottom:8px;padding:0;font:700 14px/1.35 var(--font-body);color:var(--ink)}
+.scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+.scale label{position:relative;display:block}
+.scale input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.scale span{display:grid;place-items:center;height:44px;border:1px solid var(--line-strong);border-radius:10px;background:var(--bg);color:var(--ink-2);font:800 17px var(--font-display);font-variant-numeric:tabular-nums}
+.scale label:hover span{border-color:var(--brand)}
+.scale input:checked+span{background:var(--brand);border-color:var(--brand);color:var(--brand-ink)}
+.scale input:focus-visible+span{outline:2px solid var(--brand);outline-offset:2px}
+.scale-ends{display:flex;justify-content:space-between;margin-top:5px;font-size:12px;color:var(--ink-3)}
+.rate[aria-invalid="true"] .scale span{border-color:var(--err)}
+.field textarea{display:block;width:100%;min-height:76px;resize:vertical;padding:10px 12px;border:1px solid var(--line-strong);border-radius:10px;background:var(--bg);color:var(--ink);font:500 15px/1.45 var(--font-body)}
+.field textarea:focus{outline:2px solid var(--brand);outline-offset:0;border-color:var(--brand)}
+.opt{font-weight:500;color:var(--ink-3)}
+.fbbars{display:grid;gap:8px;margin-top:12px;max-width:560px}
+.fbrow{display:grid;grid-template-columns:118px minmax(0,1fr) 44px;gap:12px;align-items:center;font-size:13.5px;color:var(--ink-2)}
+.fbmeter{position:relative;height:8px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
+.fbmeter i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--brand)}
+.fbrow b{font:800 15px var(--font-display);color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
+.fbrow b small{font:500 11.5px var(--font-body);color:var(--ink-3)}
+@media (max-width:420px){.fbrow{grid-template-columns:96px minmax(0,1fr) 40px;gap:10px}}
+
 .foot{padding-block:8px 40px;color:var(--ink-3);font-size:13px}
 
 @media (prefers-reduced-motion:no-preference){
@@ -382,6 +408,7 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
         <button class="tab" role="tab" id="tab-schedule" aria-controls="panel-schedule" data-tab="schedule" aria-selected="true">Schedule</button>
         <button class="tab" role="tab" id="tab-done" aria-controls="panel-done" data-tab="done" aria-selected="false" tabindex="-1">Completed<span class="dcount" id="donecount" hidden>0</span></button>
         <button class="tab" role="tab" id="tab-attendance" aria-controls="panel-attendance" data-tab="attendance" aria-selected="false" tabindex="-1">Attendance</button>
+        <button class="tab" role="tab" id="tab-feedback" aria-controls="panel-feedback" data-tab="feedback" aria-selected="false" tabindex="-1">Feedback</button>
         <button class="tab" role="tab" id="tab-week" aria-controls="panel-week" data-tab="week" aria-selected="false" tabindex="-1">Week view</button>
         <button class="tab" role="tab" id="tab-trainers" aria-controls="panel-trainers" data-tab="trainers" aria-selected="false" tabindex="-1">Trainers</button>
         <button class="tab" role="tab" id="tab-guide" aria-controls="panel-guide" data-tab="guide" aria-selected="false" tabindex="-1">Good to know</button>
@@ -434,6 +461,17 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
       <div id="astats"></div>
       <div class="resultline" id="aline" aria-live="polite"></div>
       <div id="alist"></div>
+    </section>
+
+    <section class="panel" id="panel-feedback" role="tabpanel" aria-labelledby="tab-feedback" hidden>
+      <h2 class="sr">Session feedback</h2>
+      <div class="cibar" id="fbbar"></div>
+      <div class="toolbar">
+        <div class="fgroup fpills" role="group" aria-label="Choose your floor"><span class="flabel">Your floor</span></div>
+      </div>
+      <div id="fbstats"></div>
+      <div class="resultline" id="fbline" aria-live="polite"></div>
+      <div id="fblist"></div>
     </section>
 
     <section class="panel" id="panel-week" role="tabpanel" aria-labelledby="tab-week" hidden>
@@ -522,6 +560,34 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
   </div>
 </dialog>
 
+<dialog class="ci" id="fbdialog" aria-labelledby="fbtitle">
+  <form id="fbform" novalidate>
+    <div class="cihead">
+      <h2 id="fbtitle">Session feedback</h2>
+      <button class="xbtn" type="button" data-fbclose aria-label="Close"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
+    </div>
+    <p class="anon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>Anonymous. Your name and email are not asked for or saved, and your comments go only to the training team.</span></p>
+    <div class="cisess" id="fbsess"></div>
+    <fieldset class="rate" id="fbq-overall"><legend>Overall, how was this session?</legend><div class="scale"><label><input type="radio" name="overall" value="1" aria-label="1 out of 5"><span>1</span></label><label><input type="radio" name="overall" value="2" aria-label="2 out of 5"><span>2</span></label><label><input type="radio" name="overall" value="3" aria-label="3 out of 5"><span>3</span></label><label><input type="radio" name="overall" value="4" aria-label="4 out of 5"><span>4</span></label><label><input type="radio" name="overall" value="5" aria-label="5 out of 5"><span>5</span></label></div><div class="scale-ends" aria-hidden="true"><span>1 · Poor</span><span>5 · Excellent</span></div></fieldset>
+    <fieldset class="rate" id="fbq-trainer"><legend>How clearly did the trainer explain the topics?</legend><div class="scale"><label><input type="radio" name="trainer" value="1" aria-label="1 out of 5"><span>1</span></label><label><input type="radio" name="trainer" value="2" aria-label="2 out of 5"><span>2</span></label><label><input type="radio" name="trainer" value="3" aria-label="3 out of 5"><span>3</span></label><label><input type="radio" name="trainer" value="4" aria-label="4 out of 5"><span>4</span></label><label><input type="radio" name="trainer" value="5" aria-label="5 out of 5"><span>5</span></label></div><div class="scale-ends" aria-hidden="true"><span>1 · Poor</span><span>5 · Excellent</span></div></fieldset>
+    <fieldset class="rate" id="fbq-useful"><legend>How useful will this be on your calls?</legend><div class="scale"><label><input type="radio" name="useful" value="1" aria-label="1 out of 5"><span>1</span></label><label><input type="radio" name="useful" value="2" aria-label="2 out of 5"><span>2</span></label><label><input type="radio" name="useful" value="3" aria-label="3 out of 5"><span>3</span></label><label><input type="radio" name="useful" value="4" aria-label="4 out of 5"><span>4</span></label><label><input type="radio" name="useful" value="5" aria-label="5 out of 5"><span>5</span></label></div><div class="scale-ends" aria-hidden="true"><span>1 · Poor</span><span>5 · Excellent</span></div></fieldset>
+    <div class="field"><label for="fbgood">What worked well? <span class="opt">(optional)</span></label><textarea id="fbgood" maxlength="500"></textarea></div>
+    <div class="field"><label for="fbbetter">What could be better? <span class="opt">(optional)</span></label><textarea id="fbbetter" maxlength="500"></textarea></div>
+    <div class="field"><label for="fbcode">Session code</label><input id="fbcode" class="code" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" required placeholder="····"><p class="hint">The same 4-digit code your trainer shared for attendance.</p></div>
+    <p class="cimsg" id="fbmsg" role="alert"></p>
+    <div class="ciactions">
+      <button class="btn ghost" type="button" data-fbclose>Cancel</button>
+      <button class="btn" type="submit" id="fbsubmit">Send feedback</button>
+    </div>
+  </form>
+  <div class="ciok" id="fbok" hidden>
+    <span class="tick"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>
+    <h2 id="fbokh">Thank you</h2>
+    <p id="fbokp"></p>
+    <button class="btn" type="button" data-fbclose>Done</button>
+  </div>
+</dialog>
+
 <footer class="wrap foot">Airtribe · Sales Training Calendar · OND, October to December 2026</footer>
 
 <script>
@@ -538,10 +604,11 @@ var WEEK_NOTES={
   'Nov W2':'<b>Diwali week, 9 – 11 Nov.</b> No sessions on these days.',
   'Dec W4':'<b>Christmas, Fri 25 Dec.</b> No sessions that day. 28 – 31 Dec is kept free as buffer for reschedules.'
 };
-var TABS=['schedule','done','attendance','week','trainers','guide'];
+var TABS=['schedule','done','attendance','feedback','week','trainers','guide'];
 /* Attendance: check-ins go to a Google Apps Script web app that writes to the training team's Google Sheet. */
 var ATT_URL='https://script.google.com/macros/s/AKfycbxP16rkpLKwGZ-uD3QcvTDyuPQU2rJVL8QEG4YtzwOX38sXGHDBOpbjKmdaDvfSLfGpUA/exec';
 var CI_BEFORE=15,CI_UNTIL=60; /* check-in opens 15 min before a session starts and closes 1 hour after it starts (11:30 AM for a 10:30 AM session) */
+var FB_HOURS=24; /* feedback opens when a session starts and closes 24 hours after it ends */
 
 function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function $(id){return document.getElementById(id);}
@@ -569,6 +636,7 @@ S.forEach(function(s){
   s.id='S'+(s.n<10?'0':'')+s.n;
   s.ciOpen=new Date(s.start.getTime()-CI_BEFORE*6e4);
   s.ciClose=new Date(s.start.getTime()+CI_UNTIL*6e4);
+  s.fbClose=new Date(s.end.getTime()+FB_HOURS*36e5);
 });
 /* Each session is Completed after its end time, In progress while it runs, Today on its day, otherwise Upcoming.
    Everything below reads this, so the page keeps itself current without being republished. */
@@ -583,6 +651,10 @@ function setClock(){
     if(ci!==s.ci){s.ci=ci;changed=true;}
     var seen=NOW>=s.ciOpen;
     if(seen!==s.seen){s.seen=seen;changed=true;}
+    var fb=NOW>=s.start&&NOW<=s.fbClose;
+    if(fb!==s.fb){s.fb=fb;changed=true;}
+    var begun=NOW>=s.start;
+    if(begun!==s.begun){s.begun=begun;changed=true;}
   });
   return changed;
 }
@@ -966,6 +1038,142 @@ $('ciform').addEventListener('submit',function(e){
 $('cidialog').addEventListener('close',function(){renderCiBars();});
 $('cicode').addEventListener('input',function(e){var v=e.target.value.replace(/\D/g,'').slice(0,4);if(v!==e.target.value)e.target.value=v;});
 
+
+/* ---------- Feedback (anonymous) ---------- */
+var FB={ok:false,loading:false,failed:false,at:0,data:{}};
+var fbSent=lsGet('airtribe-fb-sent',[]);
+function fbDevice(){
+  var d=lsGet('airtribe-fb-device','');
+  if(!d){
+    var a=new Uint8Array(16);
+    try{crypto.getRandomValues(a);}catch(e){for(var i=0;i<16;i++)a[i]=Math.floor(Math.random()*256);}
+    d=Array.prototype.map.call(a,function(x){return ('0'+x.toString(16)).slice(-2);}).join('');
+    lsSet('airtribe-fb-device',d);
+  }
+  return d;
+}
+var FB_DEVICE=fbDevice();
+function dayHm(d){return ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()]+' '+fmtDM(d)+', '+hm(d);}
+function loadFb(force){
+  if(!ON||FB.loading)return;
+  if(!force&&FB.at&&Date.now()-FB.at<45000)return;
+  FB.loading=true;
+  fetch(ATT_URL+'?view=feedback',{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
+    if(!j||!j.ok)throw new Error('bad');
+    FB.data=j.sessions||{};FB.ok=true;FB.failed=false;FB.at=Date.now();
+  }).catch(function(){FB.failed=true;}).then(function(){FB.loading=false;renderFeedback();});
+}
+function fbCards(){
+  var open=S.filter(function(s){return s.fb;});
+  open.sort(function(a,b){return (b.floor===state.floor)-(a.floor===state.floor)||b.start-a.start;});
+  return open.map(function(s){
+    var sent=fbSent.indexOf(s.id)>-1;
+    return '<div class="cicard"><div>'+
+      '<p class="cilive">Feedback open · until '+dayHm(s.fbClose)+'</p>'+
+      '<h3><span>'+esc(s.trainer)+'</span><span class="chip f-'+s.floor+'">'+s.floor+'</span></h3>'+
+      '<p>'+s.dm+' · '+s.range+'</p></div>'+
+      (sent?'<span class="cidone-tag">'+TICK+'Feedback sent</span>':'<button class="btn" type="button" data-feedback="'+s.id+'">Give feedback</button>')+
+    '</div>';
+  }).join('');
+}
+function fbRow(label,v){
+  return '<div class="fbrow"><span>'+label+'</span><span class="fbmeter" aria-hidden="true"><i style="width:'+(v?Math.round(v/5*100):0)+'%"></i></span><b>'+(v==null?'–':v.toFixed(1))+'<small>/5</small></b></div>';
+}
+function renderFeedback(){
+  var cards=ON?fbCards():'';
+  if(cards){$('fbbar').innerHTML=cards;}
+  else{
+    var vf=visibleFloors();
+    var nx=S.filter(function(s){return NOW<s.start&&vf.indexOf(s.floor)>-1;})[0];
+    $('fbbar').innerHTML='<p class="cinote"><span><b>How feedback works:</b> it opens when a session starts and stays open for '+FB_HOURS+' hours after it ends. It is anonymous: your name and email are never asked for or saved. You need the session code your trainer shared.</span>'+
+      (nx?'<span>Next feedback opens: <b>'+nx.dm+', '+nx.tstart+'</b> ('+esc(nx.trainer)+', '+nx.floor+').</span>':'')+'</p>';
+  }
+  if(!ON){$('fbstats').innerHTML='';$('fbline').innerHTML='';$('fblist').innerHTML='<div class="empty"><p><b>Feedback is being set up.</b></p></div>';return;}
+  var vf=visibleFloors();
+  var begun=S.filter(function(s){return s.begun&&vf.indexOf(s.floor)>-1;}).reverse();
+  if(!FB.ok){
+    $('fbstats').innerHTML='';$('fbline').innerHTML='';
+    $('fblist').innerHTML=FB.failed
+      ?'<div class="empty"><p><b>Feedback could not be loaded.</b> Check your internet connection and try again.</p><button class="pill" type="button" data-fbretry>Try again</button></div>'
+      :'<p class="loading">Loading feedback…</p>';
+    return;
+  }
+  if(!begun.length){
+    $('fbstats').innerHTML='';$('fbline').innerHTML='';
+    var first=S.filter(function(s){return vf.indexOf(s.floor)>-1;})[0];
+    $('fblist').innerHTML='<div class="empty"><p><b>No sessions have started yet.</b> Ratings for each session show here once people share feedback. The first '+(state.floor==='all'?'':state.floor+' ')+'session is on '+first.dm+' at '+first.tstart+'.</p></div>';
+    return;
+  }
+  var n=0,sum=0,cnt=0,usum=0,ucnt=0,rated=0;
+  begun.forEach(function(s){var f=FB.data[s.id];if(!f||!f.n)return;rated++;n+=f.n;if(f.overall!=null){sum+=f.overall*f.n;cnt+=f.n;}if(f.useful!=null){usum+=f.useful*f.n;ucnt+=f.n;}});
+  var stats=[[n,n===1?'response':'responses'],[rated,rated===1?'session rated':'sessions rated'],[cnt?(sum/cnt).toFixed(1):'–','average overall rating'],[ucnt?(usum/ucnt).toFixed(1):'–','average usefulness']];
+  $('fbstats').innerHTML='<div class="astats">'+stats.map(function(x){return '<div class="astat"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>';}).join('')+'</div>';
+  $('fbline').innerHTML='<span>Showing <b>'+begun.length+'</b> '+(begun.length===1?'session':'sessions')+(state.floor==='all'?'':' on '+state.floor)+', latest first. Ratings are out of 5; comments go only to the training team.</span><span>Updated '+hm(new Date(FB.at))+' · <button class="linkbtn" type="button" data-fbretry>Refresh</button></span>';
+  $('fblist').innerHTML='<ul class="alist">'+begun.map(function(s){
+    var f=FB.data[s.id]||{n:0};
+    var st=s.state==='done'?'Completed':s.state==='live'?'In progress':'Today';
+    return '<li class="acard">'+
+      '<div class="dateblk" aria-hidden="true"><span class="dow">'+s.day+'</span><span class="dnum">'+s.d.getDate()+'</span><span class="dmon">'+MON3[s.d.getMonth()]+'</span></div>'+
+      '<div><div class="ahead"><span class="sr">'+s.dm+', </span><span class="trainer">'+esc(s.trainer)+'</span><span class="chip f-'+s.floor+'">'+s.floor+'</span>'+
+        '<span class="acount'+(f.n?'':' zero')+'">'+plural(f.n,'response')+'</span></div>'+
+      '<p class="ameta">'+s.range+' · <b>'+st+'</b>'+(s.fb?' · feedback open until '+dayHm(s.fbClose):'')+'</p>'+
+      (f.n?'<div class="fbbars">'+fbRow('Overall',f.overall)+fbRow('Trainer clarity',f.trainer)+fbRow('Usefulness',f.useful)+'</div>'
+          :'<p class="nobody">'+(s.fb?'No feedback yet.':'No feedback was shared for this session.')+'</p>')+
+      '</div></li>';
+  }).join('')+'</ul>';
+}
+
+var fbSess=null;
+function fbMsg(m,id){
+  $('fbmsg').textContent=m||'';
+  $('fbcode').removeAttribute('aria-invalid');
+  ['overall','trainer','useful'].forEach(function(q){$('fbq-'+q).removeAttribute('aria-invalid');});
+  if(id)$(id).setAttribute('aria-invalid','true');
+}
+function fbVal(name){var r=document.querySelector('#fbform input[name="'+name+'"]:checked');return r?+r.value:0;}
+function openFeedback(id){
+  var s=S.filter(function(x){return x.id===id;})[0];if(!s)return;
+  fbSess=s;
+  $('fbsess').innerHTML='<b>'+esc(s.trainer)+' · '+s.floor+'</b><span>'+s.dm+' · '+s.range+'</span>';
+  $('fbform').reset();fbMsg('');$('fbform').hidden=false;$('fbok').hidden=true;$('fbsubmit').disabled=false;$('fbsubmit').textContent='Send feedback';
+  var d=$('fbdialog');
+  if(d.showModal)d.showModal();else d.setAttribute('open','');
+  d.scrollTop=0;
+  var first=document.querySelector('#fbform input[name="overall"]');if(first)first.focus();
+}
+function closeFeedback(){var d=$('fbdialog');if(d.close)d.close();else d.removeAttribute('open');}
+$('fbform').addEventListener('submit',function(e){
+  e.preventDefault();
+  var s=fbSess;if(!s)return;
+  var r={overall:fbVal('overall'),trainer:fbVal('trainer'),useful:fbVal('useful')};
+  var miss=['overall','trainer','useful'].filter(function(q){return !r[q];})[0];
+  if(miss)return fbMsg('Please answer all three rating questions.','fbq-'+miss);
+  var code=$('fbcode').value.replace(/\D/g,'');
+  if(code.length!==4)return fbMsg('Enter the 4-digit session code your trainer shared.','fbcode');
+  if(!ON)return fbMsg('Feedback is not switched on yet.');
+  var btn=$('fbsubmit');btn.disabled=true;btn.textContent='Sending…';fbMsg('');
+  fetch(ATT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({type:'feedback',session:s.id,code:code,device:FB_DEVICE,
+      overall:r.overall,trainer:r.trainer,useful:r.useful,good:$('fbgood').value.trim(),better:$('fbbetter').value.trim()})})
+    .then(function(res){return res.json();})
+    .then(function(j){
+      if(j&&j.ok){
+        if(fbSent.indexOf(s.id)<0){fbSent.push(s.id);lsSet('airtribe-fb-sent',fbSent);}
+        $('fbokh').textContent=j.already?'Already sent':'Thank you';
+        $('fbokp').textContent=j.already?'You have already shared feedback for '+s.trainer+'\'s session on '+s.dm+'.':'Your feedback for '+s.trainer+'\'s session on '+s.dm+' has been sent anonymously.';
+        $('fbform').hidden=true;$('fbok').hidden=false;
+        loadFb(true);
+        return;
+      }
+      var f=(j&&j.error)==='code'?'fbcode':null;
+      fbMsg((j&&j.message)||'Something went wrong. Please try again.',f);
+      if(f)$(f).focus();
+    })
+    .catch(function(){fbMsg('Could not send your feedback. Check your internet connection and try again.');})
+    .then(function(){btn.disabled=false;btn.textContent='Send feedback';});
+});
+$('fbdialog').addEventListener('close',function(){renderFeedback();});
+$('fbcode').addEventListener('input',function(e){var v=e.target.value.replace(/\D/g,'').slice(0,4);if(v!==e.target.value)e.target.value=v;});
+
 /* ---------- Tabs and events ---------- */
 function setTab(id,focus){
   if(TABS.indexOf(id)<0)id='schedule';
@@ -978,9 +1186,10 @@ function setTab(id,focus){
   });
   TABS.forEach(function(t){$('panel-'+t).hidden=t!==id;});
   if(id==='attendance')loadAtt(false);
+  if(id==='feedback')loadFb(false);
   try{history.replaceState(null,'','#'+id);}catch(e){}
 }
-function refreshAll(){renderFacts();syncPills();renderSchedule();renderDone();renderNext();renderWeek();renderTrainers();renderGuide();renderAttendance();}
+function refreshAll(){renderFacts();syncPills();renderSchedule();renderDone();renderNext();renderWeek();renderTrainers();renderGuide();renderAttendance();renderFeedback();}
 function toTabs(){$('tabbar').scrollIntoView({behavior:smooth?'smooth':'auto',block:'start'});}
 
 document.addEventListener('click',function(e){
@@ -999,6 +1208,9 @@ document.addEventListener('click',function(e){
     return;
   }
   if(t.hasAttribute('data-checkin')){openCheckin(t.getAttribute('data-checkin'));return;}
+  if(t.hasAttribute('data-feedback')){openFeedback(t.getAttribute('data-feedback'));return;}
+  if(t.hasAttribute('data-fbclose')){closeFeedback();return;}
+  if(t.hasAttribute('data-fbretry')){FB.failed=false;renderFeedback();loadFb(true);return;}
   if(t.hasAttribute('data-ciclose')){closeCheckin();return;}
   if(t.hasAttribute('data-cifloor')){setCiFloor(t.getAttribute('data-cifloor'));return;}
   if(t.hasAttribute('data-attretry')){ATT.failed=false;renderAttendance();loadAtt(true);return;}
@@ -1025,11 +1237,13 @@ loadAtt(true);
 setInterval(function(){
   if(setClock())refreshAll();
   if(state.tab==='attendance'||S.some(function(s){return s.ci;}))loadAtt(true);
+  if(state.tab==='feedback')loadFb(true);
 },60000);
 document.addEventListener('visibilitychange',function(){
   if(document.hidden)return;
   if(setClock())refreshAll();
   loadAtt(false);
+  if(state.tab==='feedback')loadFb(false);
 });
 })();
 </script>
