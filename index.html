@@ -420,6 +420,7 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
     <section class="panel" id="panel-schedule" role="tabpanel" aria-labelledby="tab-schedule">
       <h2 class="sr">Schedule</h2>
       <div class="cibar" id="cibar-sched"></div>
+      <div class="cibar" id="fbbar-sched"></div>
       <div class="toolbar">
         <div class="fgroup fpills" role="group" aria-label="Choose your floor"><span class="flabel">Your floor</span></div>
         <div class="fgroup" id="mpills" role="group" aria-label="Filter by month"><span class="flabel">Month</span></div>
@@ -1090,6 +1091,7 @@ function fbRow(label,v){
 }
 function renderFeedback(){
   var cards=ON?fbCards():'';
+  $('fbbar-sched').innerHTML=cards;   /* same cards on the main Schedule view, like check-in */
   if(cards){$('fbbar').innerHTML=cards;}
   else{
     var vf=visibleFloors();
@@ -1243,6 +1245,7 @@ buildPills();refreshAll();
 var h=(location.hash||'').replace('#','');
 setTab(TABS.indexOf(h)>-1?h:'schedule');
 loadAtt(true);
+loadFb(true);
 setInterval(function(){
   if(setClock())refreshAll();
   if(state.tab==='attendance'||S.some(function(s){return s.ci;}))loadAtt(true);
@@ -1252,7 +1255,7 @@ document.addEventListener('visibilitychange',function(){
   if(document.hidden)return;
   if(setClock())refreshAll();
   loadAtt(false);
-  if(state.tab==='feedback')loadFb(false);
+  loadFb(false);
 });
 })();
 </script>
