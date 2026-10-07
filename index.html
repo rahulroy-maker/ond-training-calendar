@@ -374,6 +374,8 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
 .fbsub dt{font-size:13px;color:var(--ink-3)}
 .fbsub dd{margin:0;font:800 19px/1.2 var(--font-display);color:var(--ink);font-variant-numeric:tabular-nums}
 .fbsub dd small{font:600 12px var(--font-body);color:var(--ink-3)}
+.acount.fbcount{display:inline-flex;align-items:baseline;gap:5px;padding:5px 14px;font:700 14px/1.2 var(--font-body)}
+.acount.fbcount b{font:800 22px/1 var(--font-display);font-variant-numeric:tabular-nums}
 .cicard p.sline,.aname{margin-top:3px;font:600 15px/1.4 var(--font-body);color:var(--ink)}
 .sline .slbl,.aname .slbl{margin-right:6px;font:700 11px var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
 .cisess .sline{font:600 14.5px/1.4 var(--font-body);color:var(--ink)}
@@ -1145,7 +1147,7 @@ function renderFeedback(){
     return '<li class="acard">'+
       '<div class="dateblk" aria-hidden="true"><span class="dow">'+s.day+'</span><span class="dnum">'+s.d.getDate()+'</span><span class="dmon">'+MON3[s.d.getMonth()]+'</span></div>'+
       '<div><div class="ahead"><span class="sr">'+s.dm+', </span><span class="trainer">'+esc(s.trainer)+'</span><span class="chip f-'+s.floor+'">'+s.floor+'</span>'+
-        '<span class="acount'+(f.n?'':' zero')+'">'+plural(f.n,'response')+'</span></div>'+
+        '<span class="acount fbcount'+(f.n?'':' zero')+'"><b>'+f.n+'</b>'+(f.n===1?'response':'responses')+'</span></div>'+
       '<p class="aname"><span class="slbl">Session</span>'+esc(sessName(s))+'</p>'+
       '<p class="ameta">'+s.range+' · <b>'+st+'</b>'+(s.fb?' · feedback open until '+dayHm(s.fbClose):'')+'</p>'+
       (f.n?fbScore(f)
