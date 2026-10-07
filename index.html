@@ -26,7 +26,7 @@
   --bel:#8A4600; --bel-bg:#FDEBD3; --bel-dot:#E08A12;
   --pml:#2447B5; --pml-bg:#E3EAFD; --pml-dot:#3B6FE6;
 
-  --err:#B42318; --ok:#0A6660; --ok-bg:#DDF3F0;
+  --err:#B42318; --ok:#0A6660; --ok-bg:#DDF3F0; --star:#E39B0B;
   --shadow:0 1px 2px rgba(40,20,90,.06),0 10px 28px rgba(40,20,90,.10);
   --radius:14px;
 }
@@ -39,7 +39,7 @@
     --gen:#62E0D4; --gen-bg:#0F302D; --gen-dot:#2FC9BC;
     --bel:#FFBA5C; --bel-bg:#3A280B; --bel-dot:#F2A33A;
     --pml:#A9C0FF; --pml-bg:#1B2B5C; --pml-dot:#7C9DFF;
-    --err:#FF9C8F; --ok:#62E0D4; --ok-bg:#0F302D;
+    --err:#FF9C8F; --ok:#62E0D4; --ok-bg:#0F302D; --star:#F6B83F;
     --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.4);
     color-scheme:dark;
   }
@@ -52,7 +52,7 @@
   --gen:#62E0D4; --gen-bg:#0F302D; --gen-dot:#2FC9BC;
   --bel:#FFBA5C; --bel-bg:#3A280B; --bel-dot:#F2A33A;
   --pml:#A9C0FF; --pml-bg:#1B2B5C; --pml-dot:#7C9DFF;
-  --err:#FF9C8F; --ok:#62E0D4; --ok-bg:#0F302D;
+  --err:#FF9C8F; --ok:#62E0D4; --ok-bg:#0F302D; --star:#F6B83F;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.4);
   color-scheme:dark;
 }
@@ -361,13 +361,19 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
 .field textarea{display:block;width:100%;min-height:76px;resize:vertical;padding:10px 12px;border:1px solid var(--line-strong);border-radius:10px;background:var(--bg);color:var(--ink);font:500 15px/1.45 var(--font-body)}
 .field textarea:focus{outline:2px solid var(--brand);outline-offset:0;border-color:var(--brand)}
 .opt{font-weight:500;color:var(--ink-3)}
-.fbbars{display:grid;gap:8px;margin-top:12px;max-width:560px}
-.fbrow{display:grid;grid-template-columns:118px minmax(0,1fr) 44px;gap:12px;align-items:center;font-size:13.5px;color:var(--ink-2)}
-.fbmeter{position:relative;height:8px;border-radius:99px;background:var(--surface-2);border:1px solid var(--line);overflow:hidden}
-.fbmeter i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:var(--brand)}
-.fbrow b{font:800 15px var(--font-display);color:var(--ink);text-align:right;font-variant-numeric:tabular-nums}
-.fbrow b small{font:500 11.5px var(--font-body);color:var(--ink-3)}
-@media (max-width:420px){.fbrow{grid-template-columns:96px minmax(0,1fr) 40px;gap:10px}}
+.fbscore{display:flex;flex-wrap:wrap;align-items:center;gap:14px 36px;margin-top:12px}
+.fbbig{display:flex;flex-direction:column;gap:3px}
+.fbnum{display:flex;align-items:baseline;gap:3px;font-variant-numeric:tabular-nums}
+.fbnum b{font:800 44px/1 var(--font-display);letter-spacing:-.02em;color:var(--ink)}
+.fbnum small{font:700 17px var(--font-display);color:var(--ink-3)}
+.stars{position:relative;display:inline-block;font-size:17px;line-height:1;letter-spacing:2px;color:var(--line-strong)}
+.stars .on{position:absolute;left:0;top:0;width:var(--p);overflow:hidden;white-space:nowrap;color:var(--star)}
+.fblbl{font:700 11.5px var(--font-body);letter-spacing:.09em;text-transform:uppercase;color:var(--brand-text)}
+.fbsub{display:flex;flex-wrap:wrap;gap:12px 28px;margin:0}
+.fbsub div{display:flex;flex-direction:column;gap:2px}
+.fbsub dt{font-size:13px;color:var(--ink-3)}
+.fbsub dd{margin:0;font:800 19px/1.2 var(--font-display);color:var(--ink);font-variant-numeric:tabular-nums}
+.fbsub dd small{font:600 12px var(--font-body);color:var(--ink-3)}
 .cicard p.sline,.aname{margin-top:3px;font:600 15px/1.4 var(--font-body);color:var(--ink)}
 .sline .slbl,.aname .slbl{margin-right:6px;font:700 11px var(--font-body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
 .cisess .sline{font:600 14.5px/1.4 var(--font-body);color:var(--ink)}
@@ -1092,8 +1098,15 @@ function fbCards(){
     '</div>';
   }).join('');
 }
-function fbRow(label,v){
-  return '<div class="fbrow"><span>'+label+'</span><span class="fbmeter" aria-hidden="true"><i style="width:'+(v?Math.round(v/5*100):0)+'%"></i></span><b>'+(v==null?'–':v.toFixed(1))+'<small>/5</small></b></div>';
+function fbScore(f){
+  function n(v){return v==null?'–':v.toFixed(1);}
+  var p=f.overall==null?0:Math.round(f.overall/5*100);
+  return '<div class="fbscore">'+
+    '<div class="fbbig"><span class="fbnum"><b>'+n(f.overall)+'</b><small>/5</small></span>'+
+      '<span class="stars" style="--p:'+p+'%" aria-hidden="true"><span class="on">★★★★★</span>★★★★★</span>'+
+      '<span class="fblbl">Overall rating</span></div>'+
+    '<dl class="fbsub"><div><dt>Trainer clarity</dt><dd>'+n(f.trainer)+'<small>/5</small></dd></div><div><dt>Usefulness</dt><dd>'+n(f.useful)+'<small>/5</small></dd></div></dl>'+
+  '</div>';
 }
 function renderFeedback(){
   var cards=ON?fbCards():'';
@@ -1135,7 +1148,7 @@ function renderFeedback(){
         '<span class="acount'+(f.n?'':' zero')+'">'+plural(f.n,'response')+'</span></div>'+
       '<p class="aname"><span class="slbl">Session</span>'+esc(sessName(s))+'</p>'+
       '<p class="ameta">'+s.range+' · <b>'+st+'</b>'+(s.fb?' · feedback open until '+dayHm(s.fbClose):'')+'</p>'+
-      (f.n?'<div class="fbbars">'+fbRow('Overall',f.overall)+fbRow('Trainer clarity',f.trainer)+fbRow('Usefulness',f.useful)+'</div>'
+      (f.n?fbScore(f)
           :'<p class="nobody">'+(s.fb?'No feedback yet.':'No feedback was shared for this session.')+'</p>')+
       '</div></li>';
   }).join('')+'</ul>';
