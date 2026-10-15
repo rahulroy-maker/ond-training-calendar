@@ -394,6 +394,24 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
 .votebtn svg{flex:none}
 .votebtn[aria-pressed="true"]{border-color:var(--brand);background:var(--brand);color:var(--brand-ink)}
 .votebtn b{font-weight:800}
+.qitem.done{opacity:.72}
+.qitem.done .qtext{text-decoration:none}
+.qacts{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.qstat{display:inline-flex;align-items:center;gap:5px;margin-left:8px;padding:2px 9px;border-radius:999px;font:700 11.5px/1.7 var(--font-body);letter-spacing:.03em;vertical-align:1px;white-space:nowrap}
+.qstat.ok{background:var(--ok-bg);color:var(--ok)}
+.qstat.no{background:#FCEBDB;color:#8A4600}
+.qstat svg{flex:none}
+.qtbtns{display:inline-flex;border:1px solid var(--line-strong);border-radius:999px;overflow:hidden;background:var(--surface)}
+.qtbtn{appearance:none;border:0;background:none;padding:6px 12px;min-height:32px;cursor:pointer;font:700 12.5px var(--font-body);color:var(--ink-2);white-space:nowrap}
+.qtbtn+.qtbtn{border-left:1px solid var(--line-strong)}
+.qtbtn:hover{background:var(--surface-2);color:var(--ink)}
+.qtbtn.on{background:var(--ok);color:#fff}
+.qtbtn.on:hover{background:var(--ok);color:#fff;filter:brightness(1.08)}
+.qtbtn:last-child.on{background:#8A4600;color:#fff}
+.qtbtn:last-child.on:hover{background:#8A4600;filter:brightness(1.08)}
+.qtbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin-top:14px;padding:9px 14px;border:1px dashed var(--line-strong);border-radius:11px;font-size:13.5px;color:var(--ink-3)}
+.qtbar.on{border-style:solid;border-color:var(--ok);background:var(--ok-bg);color:var(--ok)}
+.qtbar b{color:inherit}
 .qask{margin-top:10px}
 .qmore{margin-top:8px}
 .foot{padding-block:8px 40px;color:var(--ink-3);font-size:13px}
@@ -484,6 +502,7 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
         <div class="fgroup fpills" role="group" aria-label="Choose your floor"><span class="flabel">Your floor</span></div>
       </div>
       <div id="qastats"></div>
+      <p class="cimsg" id="qaerr" role="alert"></p>
       <div class="resultline" id="qaline" aria-live="polite"></div>
       <div id="qalist"></div>
     </section>
@@ -659,6 +678,22 @@ dialog.ci::backdrop{background:rgba(18,10,40,.6)}
     <p id="qaokp"></p>
     <button class="btn" type="button" data-qaclose>Done</button>
   </div>
+</dialog>
+
+<dialog class="ci" id="qtdialog" aria-labelledby="qttitle">
+  <form id="qtform" novalidate>
+    <div class="cihead">
+      <h2 id="qttitle">Trainer sign-in</h2>
+      <button class="xbtn" type="button" data-qtclose aria-label="Close"><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M5 5l10 10M15 5L5 15"/></svg></button>
+    </div>
+    <p class="hint">Enter the trainer PIN to mark questions <b>Answered</b> or <b>Not answered</b> while you take the session. Everyone else only sees the result.</p>
+    <div class="field"><label for="qtpin">Trainer PIN</label><input id="qtpin" class="code" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="off" required placeholder="····"></div>
+    <p class="cimsg" id="qtmsg" role="alert"></p>
+    <div class="ciactions">
+      <button class="btn ghost" type="button" data-qtclose>Cancel</button>
+      <button class="btn" type="submit" id="qtsubmit">Unlock</button>
+    </div>
+  </form>
 </dialog>
 
 <footer class="wrap foot">Airtribe · Sales Training Calendar · OND, October to December 2026</footer>
@@ -1282,8 +1317,19 @@ $('fbcode').addEventListener('input',function(e){var v=e.target.value.replace(/\
 var QA={ok:false,loading:false,failed:false,at:0,data:{}};
 var qaMine=lsGet('airtribe-qa-mine',{});    /* what this device asked, by session */
 var qaVotes=lsGet('airtribe-qa-votes',[]);  /* questions this device marked "same question" */
+/* Trainer sign-in. The PIN lives in the codes tab; the script checks it on every change. */
+var QT={on:false,pin:''};
+(function(){var p=lsGet('airtribe-qa-trainer','');if(p){QT.on=true;QT.pin=String(p);}})();
+function qtSet(pin){QT.on=!!pin;QT.pin=pin||'';if(pin)lsSet('airtribe-qa-trainer',pin);else{try{localStorage.removeItem('airtribe-qa-trainer');}catch(e){}}}
+function qaErr(m){$('qaerr').textContent=m||'';}
 var ARROW='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V6M5.5 12.5L12 6l6.5 6.5"/></svg>';
-function qaList(id){var l=QA.data[id];return l&&l.length?l.slice().sort(function(a,b){return (b.votes||0)-(a.votes||0);}):[];}
+/* Most-wanted first, with the ones already answered settling to the bottom of each session. */
+function qaList(id){
+  var l=QA.data[id];
+  return l&&l.length?l.slice().sort(function(a,b){
+    return ((a.status==='answered')-(b.status==='answered'))||((b.votes||0)-(a.votes||0));
+  }):[];
+}
 function qaMineFor(id){return qaMine[id]||[];}
 function loadQa(force){
   if(!ON||QA.loading)return;
@@ -1321,12 +1367,21 @@ function qaCards(open){
 }
 function qaItem(s,q){
   var mine=qaMineFor(s.id).indexOf(q.id)>-1,voted=qaVotes.indexOf(q.id)>-1,n=q.votes||0;
-  var btn=mine
+  var st=q.status||'';
+  var badge=st==='answered'?'<span class="qstat ok">'+TICK+'Answered</span>'
+           :st==='not'?'<span class="qstat no">Not answered</span>':'';
+  var vote=mine
     ?(n?'<span class="votebtn">'+ARROW+'<b>'+n+'</b></span>':'')
     :(s.qa?'<button class="votebtn" type="button" data-qvote="'+s.id+'|'+esc(q.id)+'" aria-pressed="'+(voted?'true':'false')+'">'+ARROW+'<span>'+(voted?'Counted':'Same question')+'</span>'+(n?'<b>'+n+'</b>':'')+'</button>'
          :(n?'<span class="votebtn">'+ARROW+'<b>'+n+'</b></span>':''));
-  return '<li class="qitem'+(mine?' mine':'')+'">'+
-    '<p class="qtext">'+esc(q.text)+(mine?'<span class="qmine-tag">Your question</span>':'')+'</p>'+btn+'</li>';
+  /* The two status buttons appear only for a signed-in trainer; everyone else sees the badge. */
+  var tb=QT.on?'<span class="qtbtns">'+
+      '<button class="qtbtn'+(st==='answered'?' on':'')+'" type="button" aria-pressed="'+(st==='answered')+'" data-qstatus="'+s.id+'|'+esc(q.id)+'|'+(st==='answered'?'':'answered')+'">Answered</button>'+
+      '<button class="qtbtn'+(st==='not'?' on':'')+'" type="button" aria-pressed="'+(st==='not')+'" data-qstatus="'+s.id+'|'+esc(q.id)+'|'+(st==='not'?'':'not')+'">Not answered</button>'+
+    '</span>':'';
+  return '<li class="qitem'+(mine?' mine':'')+(st==='answered'?' done':'')+'">'+
+    '<p class="qtext">'+esc(q.text)+(mine?'<span class="qmine-tag">Your question</span>':'')+badge+'</p>'+
+    '<span class="qacts">'+tb+vote+'</span></li>';
 }
 function renderAsk(){
   var open=ON?qaOpenSessions():[];
@@ -1360,8 +1415,13 @@ function renderAsk(){
     if(vf.indexOf(s.floor)<0)return;
     var n=qaList(s.id).length;totalQ+=n;if(n)withQ++;mineN+=qaMineFor(s.id).length;
   });
-  var stats=[[totalQ,totalQ===1?'question asked':'questions asked'],[openRows.length,openRows.length===1?'session open to ask':'sessions open to ask'],[withQ,withQ===1?'session with questions':'sessions with questions'],[mineN,mineN===1?'question from you':'questions from you']];
-  $('qastats').innerHTML='<div class="astats">'+stats.map(function(x){return '<div class="astat"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>';}).join('')+'</div>';
+  var answeredQ=0;
+  S.forEach(function(s){if(vf.indexOf(s.floor)<0)return;qaList(s.id).forEach(function(q){if(q.status==='answered')answeredQ++;});});
+  var stats=[[totalQ,totalQ===1?'question asked':'questions asked'],[answeredQ,answeredQ===1?'answered':'answered'],[openRows.length,openRows.length===1?'session open to ask':'sessions open to ask'],[mineN,mineN===1?'question from you':'questions from you']];
+  $('qastats').innerHTML='<div class="astats">'+stats.map(function(x){return '<div class="astat"><b>'+x[0]+'</b><span>'+x[1]+'</span></div>';}).join('')+'</div>'+
+    (QT.on
+      ?'<p class="qtbar on"><span>'+TICK+'<b>Trainer sign-in on.</b> You can mark each question Answered or Not answered.</span><button class="linkbtn" type="button" data-qtlock>Turn off</button></p>'
+      :'<p class="qtbar"><span>Taking one of these sessions? Sign in to mark questions as you cover them.</span><button class="linkbtn" type="button" data-qtopen>Trainer sign-in →</button></p>');
   if(!rows.length){
     $('qaline').innerHTML='';
     var first=S.filter(function(s){return !s.begun&&vf.indexOf(s.floor)>-1;})[0];
@@ -1444,6 +1504,49 @@ function qaVote(key){
     });
 }
 
+/* Trainer marks a question Answered or Not answered. The script checks the PIN every time. */
+function qaStatus(key){
+  var p=key.split('|'),sid=p[0],qid=p[1],want=p[2]||'';
+  var q=(QA.data[sid]||[]).filter(function(x){return x.id===qid;})[0];
+  if(!q||!QT.on)return;
+  var prev=q.status||'';
+  q.status=want;qaErr('');renderAsk();
+  if(!ON)return;
+  fetch(ATT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({type:'qstatus',session:sid,qid:qid,status:want,pin:QT.pin})})
+    .then(function(r){return r.json();})
+    .then(function(j){
+      if(j&&j.ok)return;
+      q.status=prev;
+      if(j&&(j.error==='pin'||j.error==='nopin'))qtSet('');
+      qaErr((j&&j.message)||'That change could not be saved. Please try again.');
+      renderAsk();
+    })
+    .catch(function(){q.status=prev;qaErr('That change could not be saved. Check your internet connection and try again.');renderAsk();});
+}
+function openTrainer(){
+  $('qtform').reset();$('qtmsg').textContent='';$('qtsubmit').disabled=false;$('qtsubmit').textContent='Unlock';
+  var d=$('qtdialog');if(d.showModal)d.showModal();else d.setAttribute('open','');
+  $('qtpin').focus();
+}
+function closeTrainer(){var d=$('qtdialog');if(d.close)d.close();else d.removeAttribute('open');}
+$('qtform').addEventListener('submit',function(e){
+  e.preventDefault();
+  var pin=$('qtpin').value.replace(/\D/g,'');
+  if(pin.length<3)return($('qtmsg').textContent='Enter the trainer PIN.');
+  if(!ON)return($('qtmsg').textContent='Questions are not switched on yet.');
+  var sid=(S.filter(function(s){return s.qa;})[0]||S.filter(function(s){return !s.begun;})[0]||S[0]).id;
+  var btn=$('qtsubmit');btn.disabled=true;btn.textContent='Checking…';$('qtmsg').textContent='';
+  fetch(ATT_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({type:'qpin',session:sid,pin:pin})})
+    .then(function(r){return r.json();})
+    .then(function(j){
+      if(j&&j.ok){qtSet(pin);closeTrainer();qaErr('');renderAsk();return;}
+      $('qtmsg').textContent=(j&&j.message)||'That PIN could not be checked. Please try again.';
+    })
+    .catch(function(){$('qtmsg').textContent='Could not check the PIN. Check your internet connection and try again.';})
+    .then(function(){btn.disabled=false;btn.textContent='Unlock';});
+});
+$('qtpin').addEventListener('input',function(e){var v=e.target.value.replace(/\D/g,'').slice(0,6);if(v!==e.target.value)e.target.value=v;});
+
 /* ---------- Tabs and events ---------- */
 function setTab(id,focus){
   if(TABS.indexOf(id)<0)id='schedule';
@@ -1486,6 +1589,10 @@ document.addEventListener('click',function(e){
   if(t.hasAttribute('data-qaclose')){closeAsk();return;}
   if(t.hasAttribute('data-qvote')){qaVote(t.getAttribute('data-qvote'));return;}
   if(t.hasAttribute('data-qaretry')){QA.failed=false;renderAsk();loadQa(true);return;}
+  if(t.hasAttribute('data-qstatus')){qaStatus(t.getAttribute('data-qstatus'));return;}
+  if(t.hasAttribute('data-qtopen')){openTrainer();return;}
+  if(t.hasAttribute('data-qtclose')){closeTrainer();return;}
+  if(t.hasAttribute('data-qtlock')){qtSet('');qaErr('');renderAsk();return;}
   if(t.hasAttribute('data-ciclose')){closeCheckin();return;}
   if(t.hasAttribute('data-cifloor')){setCiFloor(t.getAttribute('data-cifloor'));return;}
   if(t.hasAttribute('data-attretry')){ATT.failed=false;renderAttendance();loadAtt(true);return;}
