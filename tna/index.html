@@ -87,7 +87,7 @@ button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;touch-
 .logo-chip{background:#fff;border-radius:12px;padding:10px 18px;display:inline-flex;align-items:center;box-shadow:0 6px 20px rgba(0,0,0,.18)}
 .logo-chip img{display:block;width:104px;height:auto}
 .themeset{display:flex;gap:4px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:99px;padding:3px}
-.themebtn{border:none;background:transparent;border-radius:99px;padding:5px 11px;font-size:11.5px;font-weight:700;color:var(--on-band-soft);white-space:nowrap;transition:background .18s,color .18s}
+.themebtn{border:none;background:transparent;border-radius:99px;padding:7px 12px;font-size:11.5px;font-weight:700;color:var(--on-band-soft);white-space:nowrap;transition:background .18s,color .18s}
 .themebtn:hover{color:#fff}
 .themebtn:focus-visible{outline:2px solid #fff;outline-offset:2px}
 .themebtn[aria-pressed="true"]{background:#fff;color:var(--band)}
@@ -187,9 +187,11 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
   .raillabel{font-size:9.5px;letter-spacing:.05em}
   .themeset{order:2}
   .toprow{gap:10px}
+  .themebtn{padding:10px 14px}
 }
 @media (max-width:380px){
-  .themebtn{padding:5px 9px;font-size:11px}
+  .themebtn{padding:10px 10px;font-size:11px}
+  .logo-chip img{width:92px}
 }
 
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
