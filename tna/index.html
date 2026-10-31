@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#45277F">
 <title>Floor Gap Review</title>
 <meta name="description" content="Anonymous training needs review for Airtribe sales counsellors.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Poppins:wght@500;600;700&display=swap">
@@ -61,11 +62,12 @@ img{max-width:100%}
   color-scheme:light;
 }
 
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 *,*::before,*::after{box-sizing:border-box}
 h1,h2,h3,p,ul{margin:0}
 ul{padding:0;list-style:none}
-button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer;touch-action:manipulation}
 
 .inner{max-width:760px;margin:0 auto;padding-left:max(18px, env(safe-area-inset-left, 0px));padding-right:max(18px, env(safe-area-inset-right, 0px))}
 
@@ -128,9 +130,15 @@ button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
 .qhint{font-size:13px;color:var(--muted);line-height:1.45;margin-top:-4px}
 
 select,input[type="text"],textarea{
-  font-family:inherit;font-size:15px;color:var(--ink);background:var(--paper);
-  border:1px solid var(--line);border-radius:10px;padding:11px 13px;width:100%;
-  transition:border-color .18s,box-shadow .18s;
+  /* 16px minimum: iOS Safari zooms the page on focus for anything smaller */
+  font-family:inherit;font-size:16px;color:var(--ink);background:var(--paper);
+  border:1px solid var(--line);border-radius:10px;padding:12px 13px;width:100%;
+  max-width:100%;transition:border-color .18s,box-shadow .18s;
+  -webkit-appearance:none;appearance:none;
+}
+select{
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1.5 6 6.5l5-5' fill='none' stroke='%23554E6D' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat:no-repeat;background-position:right 13px center;padding-right:38px;
 }
 textarea{resize:vertical;min-height:92px;line-height:1.5}
 select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
@@ -166,6 +174,24 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
 
 .foot{margin-top:26px;font-size:12.5px;color:var(--muted);text-align:center;font-weight:500}
 
+/* Phones: bigger tap targets, full-width actions, no cramped gutters */
+@media (max-width:640px){
+  .hero{padding-block:18px 26px}
+  .card{padding:18px 16px;border-radius:13px}
+  .chip{padding:11px 16px;font-size:14px}
+  .q{padding-block:16px}
+  .qlabel{font-size:15.5px}
+  .nav{gap:9px}
+  .nav .btn{flex:1 1 auto;padding:14px 18px;text-align:center}
+  .privacy{padding:15px 16px;gap:11px}
+  .raillabel{font-size:9.5px;letter-spacing:.05em}
+  .themeset{order:2}
+  .toprow{gap:10px}
+}
+@media (max-width:380px){
+  .themebtn{padding:5px 9px;font-size:11px}
+}
+
 @media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -184,10 +210,10 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
       </span>
     </div>
     <div>
-      <div class="eyebrow">Training needs review</div>
+      <div class="eyebrow">Building the next refresher</div>
       <h1>Where training and the floor differ</h1>
     </div>
-    <p class="sub">Tell us what training got right, what it missed, and what you actually do on calls. This is what the next refresher gets built from.</p>
+    <p class="sub">Tell us what training got right, what it missed, and what you actually do on calls. The next refresher is built from these answers and nothing else, so what you write here decides what gets taught.</p>
   </div>
 </header>
 
@@ -335,6 +361,18 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
         <textarea id="improve" placeholder="Big or small."></textarea>
       </div>
 
+      <div class="q">
+        <label class="qlabel" for="urgency">How soon do you need a refresher?<span class="req">*</span></label>
+        <div class="qhint">This is what sets the running order, so answer for yourself rather than for the team.</div>
+        <select id="urgency">
+          <option value="">Select one</option>
+          <option>I need it immediately</option>
+          <option>At the next scheduled refresher</option>
+          <option>Useful but not urgent</option>
+          <option>No refresher needed right now</option>
+        </select>
+      </div>
+
       <div class="nav">
         <button type="button" class="btn" data-go="1">Back</button>
         <button type="button" class="btn primary" id="submitBtn">Submit anonymously</button>
@@ -376,7 +414,8 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
     soft:     'entry.1139268132',
     stuck:    'entry.1500495942',
     unused:   'entry.1909892781',
-    improve:  'entry.1962618544'
+    improve:  'entry.1962618544',
+    urgency:  'entry.376612101'
   };
 
   var OPTIONS = {
@@ -499,6 +538,8 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
 
     var stuck = document.getElementById('stuck').value.trim();
     if(stuck.length < 5){ return note(2, 'bad', 'Give us the one prospect question you are still stuck on — it is the most useful answer on this form.'); }
+    var urgency = document.getElementById('urgency').value;
+    if(!urgency){ return note(2, 'bad', 'Tell us how soon you need a refresher.'); }
 
     var body = new URLSearchParams();
     body.append(FIELD.marker, 'Anonymous self-report');
@@ -511,6 +552,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
     body.append(FIELD.stuck, stuck);
     body.append(FIELD.unused, document.getElementById('unused').value.trim());
     body.append(FIELD.improve, document.getElementById('improve').value.trim());
+    body.append(FIELD.urgency, urgency);
 
     btn.disabled = true;
     note(2, 'info', 'Sending...');
