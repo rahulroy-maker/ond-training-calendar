@@ -399,26 +399,15 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
 
 <script>
 (function(){
-  /* Posts into the existing "Training vs Floor: Agent Gap Review" form, whose
-     responses the training team links to the tracker. Google Forms records no
-     identity of its own, and nothing identifying is sent below. */
-  var FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSfcaHUmAWLjAN-RO6s1MpAczxxRcBR1TgmXHF5JAQNTCSvG4A/formResponse';
+  /* Writes the "TNA TNI Anonymous" tab of the AI Projects - Training Team
+     sheet, through the Apps Script web app. Paste that web app's URL between
+     the quotes. Until it is set the form refuses to pretend it sent anything.
 
-  var FIELD = {
-    marker:   'entry.1523119685',
-    vertical: 'entry.118734274',
-    role:     'entry.2082302702',
-    tenure:   'entry.1913025045',
-    callflow: 'entry.1996702954',
-    maingap:  'entry.1881509953',
-    sales:    'entry.2074590236',
-    product:  'entry.327977146',
-    soft:     'entry.1139268132',
-    stuck:    'entry.1500495942',
-    unused:   'entry.1909892781',
-    improve:  'entry.1962618544',
-    urgency:  'entry.376612101'
-  };
+     Deliberately NOT a Google Form: that route carries the submitter's Google
+     account, which would make the response anything but anonymous. The payload
+     below has no name, email, manager or device field, and the sheet has no
+     column for one. */
+  var ENDPOINT = '';
 
   var OPTIONS = {
     callflow: ['Introduction','Context','Profiling','Fit check','Profile mapping','Program','Placement','USPs','Negotiation','Closure','Nothing significant'],
@@ -543,24 +532,41 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
     var urgency = document.getElementById('urgency').value;
     if(!urgency){ return note(2, 'bad', 'Tell us how soon you need a refresher.'); }
 
-    var body = new URLSearchParams();
-    body.append(FIELD.marker, 'Anonymous self-report');
-    body.append(FIELD.vertical, document.getElementById('vertical').value);
-    body.append(FIELD.role, document.getElementById('role').value);
-    body.append(FIELD.tenure, document.getElementById('tenure').value);
-    ['callflow', 'maingap', 'sales', 'product', 'soft'].forEach(function(k){
-      body.append(FIELD[k], compose(k));
-    });
-    body.append(FIELD.stuck, stuck);
-    body.append(FIELD.unused, document.getElementById('unused').value.trim());
-    body.append(FIELD.improve, document.getElementById('improve').value.trim());
-    body.append(FIELD.urgency, urgency);
+    if(!ENDPOINT){
+      return note(2, 'bad', 'This form is not connected to the tracker yet, so nothing would be saved. Tell the training team before filling it in.');
+    }
+
+    var payload = {
+      action: 'nr.tna',
+      responseId: 'T' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 6).toUpperCase(),
+      vertical: document.getElementById('vertical').value,
+      role: document.getElementById('role').value,
+      tenure: document.getElementById('tenure').value,
+      callflow: compose('callflow'),
+      maingap: compose('maingap'),
+      sales: compose('sales'),
+      product: compose('product'),
+      soft: compose('soft'),
+      stuck: stuck,
+      unused: document.getElementById('unused').value.trim(),
+      improve: document.getElementById('improve').value.trim(),
+      urgency: urgency
+    };
 
     btn.disabled = true;
     note(2, 'info', 'Sending...');
 
-    fetch(FORM_ACTION, { method: 'POST', mode: 'no-cors', body: body })
-      .then(function(){
+    /* text/plain keeps this a simple request, so no preflight, and the Apps
+       Script reply stays readable — the success screen only shows on a real
+       confirmation from the sheet, never on a hopeful guess. */
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify(payload)
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        if(!res || res.ok !== true){ throw new Error(res && res.error ? res.error : 'rejected'); }
         steps.forEach(function(id){ document.getElementById(id).hidden = true; });
         document.getElementById('stepDone').hidden = false;
         Array.prototype.forEach.call(document.querySelectorAll('.railseg'), function(seg){
@@ -570,7 +576,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
       })
       .catch(function(){
         btn.disabled = false;
-        note(2, 'bad', 'That did not send. Check your connection and try once more.');
+        note(2, 'bad', 'That did not save. Nothing has been recorded, so please try again rather than assuming it went through.');
       });
   });
 
