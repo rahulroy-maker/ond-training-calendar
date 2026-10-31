@@ -1,0 +1,537 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Floor Gap Review</title>
+<meta name="description" content="Anonymous training needs review for Airtribe sales counsellors.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Poppins:wght@500;600;700&display=swap">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+<style>
+/* Layout: a narrow single-column form on calm ground, stepped into three parts with a progress rail */
+:root{
+  --band:#45277F; --band-2:#5C3C9E; --on-band:#FFFFFF; --on-band-soft:#E6DDF9;
+  --paper:#F6F4FB; --surface:#FFFFFF; --surface-2:#EFEBF8;
+  --ink:#140E26; --ink-soft:#352C4C; --muted:#554E6D;
+  --line:#E4DEF4; --line-strong:#CFC6EC;
+  --accent:#6835FB; --accent-ink:#5526DE; --accent-soft:#EDE7FF;
+  --live:#D41C68; --live-soft:#FFE3EE;
+  --done:#0B8F79; --done-soft:#DAFAF2;
+  --shadow:0 10px 32px rgba(40,20,90,.10);
+  --display:"Poppins",system-ui,-apple-system,Segoe UI,sans-serif;
+  --body:"DM Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --band:#2E1A5E; --band-2:#432879; --on-band-soft:#DCCEF8;
+    --paper:#120F1C; --surface:#1C1829; --surface-2:#262037;
+    --ink:#F7F5FD; --ink-soft:#E0DAEF; --muted:#B4ADCB;
+    --line:#352D49; --line-strong:#4E4370;
+    --accent:#A585FF; --accent-ink:#BCA4FF; --accent-soft:#2A2142;
+    --live:#FF72A8; --live-soft:#3A1527; --done:#54F9DA; --done-soft:#0E3730;
+    --shadow:0 10px 32px rgba(0,0,0,.42);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --band:#2E1A5E; --band-2:#432879; --on-band-soft:#DCCEF8;
+  --paper:#120F1C; --surface:#1C1829; --surface-2:#262037;
+  --ink:#F7F5FD; --ink-soft:#E0DAEF; --muted:#B4ADCB;
+  --line:#352D49; --line-strong:#4E4370;
+  --accent:#A585FF; --accent-ink:#BCA4FF; --accent-soft:#2A2142;
+  --live:#FF72A8; --live-soft:#3A1527; --done:#54F9DA; --done-soft:#0E3730;
+  --shadow:0 10px 32px rgba(0,0,0,.42);
+  color-scheme:dark;
+}
+/* Desert — declared last so it wins over both dark blocks */
+:root[data-skin="desert"]{
+  --band:#7E3F22; --band-2:#9C5533; --on-band-soft:#F6DFC4;
+  --paper:#FBF3E6; --surface:#FFFBF3; --surface-2:#F4E8D4;
+  --ink:#2A1A0E; --ink-soft:#4C3621; --muted:#6E573C;
+  --line:#E7D5B9; --line-strong:#D2B991;
+  --accent:#BE5E1B; --accent-ink:#96460F; --accent-soft:#FBE6CF;
+  --live:#AE3327; --live-soft:#FADFD9; --done:#4F7227; --done-soft:#E9F2D7;
+  --shadow:0 10px 32px rgba(90,52,20,.14);
+  color-scheme:light;
+}
+
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15.5px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+*,*::before,*::after{box-sizing:border-box}
+h1,h2,h3,p,ul{margin:0}
+ul{padding:0;list-style:none}
+button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
+
+.inner{max-width:760px;margin:0 auto;padding-left:max(18px, env(safe-area-inset-left, 0px));padding-right:max(18px, env(safe-area-inset-right, 0px))}
+
+@keyframes riseIn{from{opacity:0;transform:translateY(14px)}}
+@keyframes popIn{from{opacity:0;transform:scale(.94)}}
+
+/* ---- hero ---- */
+.hero{position:relative;background:var(--band);overflow:hidden;padding-block:22px 30px}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(107deg, transparent 0 78px, var(--band-2) 78px 142px);
+  opacity:.5;-webkit-mask-image:linear-gradient(to right, transparent 46%, #000 92%);
+  mask-image:linear-gradient(to right, transparent 46%, #000 92%);
+}
+.hero .inner{position:relative;z-index:1;display:flex;flex-direction:column;gap:16px}
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.logo-chip{background:#fff;border-radius:12px;padding:10px 18px;display:inline-flex;align-items:center;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.logo-chip img{display:block;width:104px;height:auto}
+.themeset{display:flex;gap:4px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.16);border-radius:99px;padding:3px}
+.themebtn{border:none;background:transparent;border-radius:99px;padding:5px 11px;font-size:11.5px;font-weight:700;color:var(--on-band-soft);white-space:nowrap;transition:background .18s,color .18s}
+.themebtn:hover{color:#fff}
+.themebtn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.themebtn[aria-pressed="true"]{background:#fff;color:var(--band)}
+
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--on-band-soft)}
+.hero h1{font-family:var(--display);font-weight:700;color:var(--on-band);font-size:clamp(28px,5.4vw,46px);line-height:1.04;letter-spacing:-.03em;text-wrap:balance}
+.hero .sub{color:var(--on-band-soft);font-size:16px;max-width:54ch;font-weight:500}
+
+/* ---- privacy ---- */
+.privacy{
+  display:flex;gap:13px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);
+  border-left:4px solid var(--done);border-radius:13px;padding:16px 18px;box-shadow:var(--shadow);
+  margin-top:-16px;position:relative;z-index:2;
+}
+.privacy .ic{color:var(--done);flex:none;margin-top:1px}
+.privacy h2{font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:-.02em;margin-bottom:3px}
+.privacy p{font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.privacy ul{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.privacy li{font-size:11.5px;font-weight:700;background:var(--done-soft);color:var(--done);border-radius:99px;padding:4px 11px}
+
+/* ---- steps ---- */
+.main{padding-block:22px 54px}
+.rail{display:flex;gap:7px;margin-bottom:20px}
+.railseg{flex:1;display:flex;flex-direction:column;gap:7px;min-width:0}
+.railbar{height:5px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.railbar i{display:block;height:100%;width:0;background:var(--accent);border-radius:99px;transition:width .45s cubic-bezier(.3,.8,.3,1)}
+.railseg.on .railbar i,.railseg.past .railbar i{width:100%}
+.raillabel{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.railseg.on .raillabel{color:var(--accent-ink)}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:22px;animation:riseIn .4s cubic-bezier(.2,.75,.3,1) backwards}
+.steptop{display:flex;flex-direction:column;gap:5px;margin-bottom:20px;padding-bottom:17px;border-bottom:1px solid var(--line)}
+.steptop h2{font-family:var(--display);font-size:21px;font-weight:600;letter-spacing:-.025em}
+.steptop p{font-size:13.5px;color:var(--ink-soft)}
+
+.q{display:flex;flex-direction:column;gap:9px;padding-block:17px;border-bottom:1px solid var(--line)}
+.q:last-of-type{border-bottom:none;padding-bottom:4px}
+.qlabel{font-size:16px;font-weight:700;line-height:1.4;letter-spacing:-.005em}
+.qlabel .req{color:var(--live);margin-left:3px}
+.qhint{font-size:13px;color:var(--muted);line-height:1.45;margin-top:-4px}
+
+select,input[type="text"],textarea{
+  font-family:inherit;font-size:15px;color:var(--ink);background:var(--paper);
+  border:1px solid var(--line);border-radius:10px;padding:11px 13px;width:100%;
+  transition:border-color .18s,box-shadow .18s;
+}
+textarea{resize:vertical;min-height:92px;line-height:1.5}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  border:1px solid var(--line);background:var(--paper);border-radius:99px;padding:8px 15px;
+  font-size:13.5px;font-weight:600;color:var(--ink-soft);
+  transition:background .16s,border-color .16s,color .16s,transform .16s;
+}
+.chip:hover{border-color:var(--line-strong);transform:translateY(-1px)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip.none[aria-pressed="true"]{background:var(--muted);border-color:var(--muted)}
+
+.nav{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:22px;flex-wrap:wrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:11px;padding:11px 20px;font-size:14.5px;font-weight:700;color:var(--ink-soft);transition:border-color .18s,color .18s,transform .18s}
+.btn:hover{border-color:var(--line-strong);transform:translateY(-1px)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(104,53,251,.26)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 11px 26px rgba(104,53,251,.34)}
+.btn:disabled{opacity:.5;transform:none;box-shadow:none;cursor:default}
+
+.note{font-size:13.5px;border-radius:10px;padding:11px 14px;font-weight:600;display:none;margin-top:14px}
+.note.show{display:block;animation:popIn .3s cubic-bezier(.2,1.2,.4,1) backwards}
+.note.bad{background:var(--live-soft);color:var(--live)}
+.note.info{background:var(--accent-soft);color:var(--accent-ink)}
+
+.done{text-align:center;padding:40px 22px;display:flex;flex-direction:column;align-items:center;gap:13px}
+.done .tick{width:62px;height:62px;border-radius:50%;background:var(--done-soft);color:var(--done);display:grid;place-items:center;animation:popIn .5s cubic-bezier(.2,1.3,.4,1) backwards}
+.done h2{font-family:var(--display);font-size:25px;font-weight:600;letter-spacing:-.03em}
+.done p{font-size:14.5px;color:var(--ink-soft);max-width:46ch}
+
+.foot{margin-top:26px;font-size:12.5px;color:var(--muted);text-align:center;font-weight:500}
+
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="inner">
+    <div class="toprow">
+      <span class="logo-chip">
+        <img alt="Airtribe" src="data:image/png;base64,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">
+      </span>
+      <span class="themeset" role="group" aria-label="Theme">
+        <button type="button" class="themebtn" data-theme="default" aria-pressed="true">Default</button>
+        <button type="button" class="themebtn" data-theme="light" aria-pressed="false">Light</button>
+        <button type="button" class="themebtn" data-theme="dark" aria-pressed="false">Dark</button>
+        <button type="button" class="themebtn" data-theme="desert" aria-pressed="false">Desert</button>
+      </span>
+    </div>
+    <div>
+      <div class="eyebrow">Training needs review</div>
+      <h1>Where training and the floor differ</h1>
+    </div>
+    <p class="sub">Tell us what training got right, what it missed, and what you actually do on calls. This is what the next refresher gets built from.</p>
+  </div>
+</header>
+
+<div class="inner">
+  <div class="privacy">
+    <span class="ic" aria-hidden="true">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 2.5 4.5 5.5v6c0 4.6 3.2 8.6 7.5 10.2 4.3-1.6 7.5-5.6 7.5-10.2v-6L12 2.5Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8.6 11.9 2.4 2.4 4.4-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </span>
+    <div>
+      <h2>This is anonymous</h2>
+      <p>No name, no email, no reporting manager, nothing that identifies your device. Answers arrive as a row of text with no way back to you, and nobody is told who did or did not fill it in. Say what you would say off the record.</p>
+      <ul>
+        <li>No name</li>
+        <li>No email</li>
+        <li>No manager</li>
+        <li>No device trace</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+  <div class="inner">
+
+    <div class="rail" id="rail">
+      <div class="railseg on" data-step="0"><div class="railbar"><i></i></div><div class="raillabel">1 · Your work</div></div>
+      <div class="railseg" data-step="1"><div class="railbar"><i></i></div><div class="raillabel">2 · The gaps</div></div>
+      <div class="railseg" data-step="2"><div class="railbar"><i></i></div><div class="raillabel">3 · In your words</div></div>
+    </div>
+
+    <!-- step 1 -->
+    <section class="card step" id="step0">
+      <div class="steptop">
+        <h2>Your work</h2>
+        <p>Three broad answers so gaps can be read by vertical and role. Kept deliberately coarse so they cannot point at a person.</p>
+      </div>
+
+      <div class="q">
+        <label class="qlabel" for="vertical">Vertical<span class="req">*</span></label>
+        <select id="vertical">
+          <option value="">Select one</option>
+          <option>AI - BEL</option>
+          <option>AI - PML</option>
+          <option>GenAI</option>
+        </select>
+      </div>
+
+      <div class="q">
+        <label class="qlabel" for="role">Role<span class="req">*</span></label>
+        <select id="role">
+          <option value="">Select one</option>
+          <option>Pre-sales (BDA)</option>
+          <option>Full sales (BDE)</option>
+        </select>
+      </div>
+
+      <div class="q">
+        <label class="qlabel" for="tenure">Time on the floor<span class="req">*</span></label>
+        <div class="qhint">A range rather than an exact date, so this cannot be traced back to you.</div>
+        <select id="tenure">
+          <option value="">Select one</option>
+          <option>Under 1 month</option>
+          <option>1 to 3 months</option>
+          <option>3 to 6 months</option>
+          <option>6 to 12 months</option>
+          <option>1 to 2 years</option>
+          <option>Over 2 years</option>
+        </select>
+      </div>
+
+      <div class="nav">
+        <span></span>
+        <button type="button" class="btn primary" data-go="1">Continue</button>
+      </div>
+      <div class="note" id="note0"></div>
+    </section>
+
+    <!-- step 2 -->
+    <section class="card step" id="step1" hidden>
+      <div class="steptop">
+        <h2>Where training and the floor differ</h2>
+        <p>Tap everything that applies. Add detail wherever you have a real example — that is the part that changes the plan.</p>
+      </div>
+
+      <div class="q">
+        <div class="qlabel">Which steps of the call flow work differently on the floor from what you were taught?</div>
+        <div class="chips" data-chips="callflow"></div>
+        <textarea data-detail="callflow" placeholder="What happens instead? (optional)"></textarea>
+      </div>
+
+      <div class="q">
+        <div class="qlabel">Where is the main gap between training and being on the floor?</div>
+        <div class="qhint">Where do you feel short right now?</div>
+        <div class="chips" data-chips="maingap"></div>
+        <textarea data-detail="maingap" placeholder="Say more (optional)"></textarea>
+      </div>
+
+      <div class="q">
+        <div class="qlabel">Sales gaps</div>
+        <div class="chips" data-chips="sales"></div>
+        <textarea data-detail="sales" placeholder="Say more (optional)"></textarea>
+      </div>
+
+      <div class="q">
+        <div class="qlabel">Product and program gaps</div>
+        <div class="chips" data-chips="product"></div>
+        <textarea data-detail="product" placeholder="Say more (optional)"></textarea>
+      </div>
+
+      <div class="q">
+        <div class="qlabel">Soft skills and communication gaps</div>
+        <div class="chips" data-chips="soft"></div>
+        <textarea data-detail="soft" placeholder="Say more (optional)"></textarea>
+      </div>
+
+      <div class="nav">
+        <button type="button" class="btn" data-go="0">Back</button>
+        <button type="button" class="btn primary" data-go="2">Continue</button>
+      </div>
+      <div class="note" id="note1"></div>
+    </section>
+
+    <!-- step 3 -->
+    <section class="card step" id="step2" hidden>
+      <div class="steptop">
+        <h2>In your words</h2>
+        <p>The three that matter most. One real example beats a list of topics.</p>
+      </div>
+
+      <div class="q">
+        <label class="qlabel" for="stuck">Which prospect question do you still not have a solid answer to?<span class="req">*</span></label>
+        <div class="qhint">Something that actually came up on a call, not a topic heading.</div>
+        <textarea id="stuck" placeholder="The question they asked, and what you ended up saying."></textarea>
+      </div>
+
+      <div class="q">
+        <label class="qlabel" for="unused">What did training cover that you have never used on the floor?</label>
+        <div class="qhint">This is how things get cut from the plan, so be blunt.</div>
+        <textarea id="unused" placeholder="Anything that has not earned its place."></textarea>
+      </div>
+
+      <div class="q">
+        <label class="qlabel" for="improve">What would you change about training and the new joiner plan?</label>
+        <div class="qhint">Product, sales and soft skills training, and the new joiner experience overall.</div>
+        <textarea id="improve" placeholder="Big or small."></textarea>
+      </div>
+
+      <div class="nav">
+        <button type="button" class="btn" data-go="1">Back</button>
+        <button type="button" class="btn primary" id="submitBtn">Submit anonymously</button>
+      </div>
+      <div class="note" id="note2"></div>
+    </section>
+
+    <!-- done -->
+    <section class="card step" id="stepDone" hidden>
+      <div class="done">
+        <span class="tick" aria-hidden="true">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="m5 12.5 4.5 4.5L19 7.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <h2>Sent anonymously</h2>
+        <p>Nothing identifying went with it. You can close this tab. If you remember something else later, open the link again and send another one.</p>
+      </div>
+    </section>
+
+    <div class="foot">Learning &amp; Development, Airtribe</div>
+  </div>
+</main>
+
+<script>
+(function(){
+  /* Posts into the existing "Training vs Floor: Agent Gap Review" form, whose
+     responses the training team links to the tracker. Google Forms records no
+     identity of its own, and nothing identifying is sent below. */
+  var FORM_ACTION = 'https://docs.google.com/forms/d/e/1FAIpQLSfcaHUmAWLjAN-RO6s1MpAczxxRcBR1TgmXHF5JAQNTCSvG4A/formResponse';
+
+  var FIELD = {
+    marker:   'entry.1523119685',
+    vertical: 'entry.118734274',
+    role:     'entry.2082302702',
+    tenure:   'entry.1913025045',
+    callflow: 'entry.1996702954',
+    maingap:  'entry.1881509953',
+    sales:    'entry.2074590236',
+    product:  'entry.327977146',
+    soft:     'entry.1139268132',
+    stuck:    'entry.1500495942',
+    unused:   'entry.1909892781',
+    improve:  'entry.1962618544'
+  };
+
+  var OPTIONS = {
+    callflow: ['Introduction','Context','Profiling','Fit check','Profile mapping','Program','Placement','USPs','Negotiation','Closure','Nothing significant'],
+    maingap:  ['Sales skill','Product and program knowledge','Process and tools (CRM, Vision, payment and ops)','Lead quality and what to expect from leads','Communication and soft skills'],
+    sales:    ['Rebuttals and objection handling','Building urgency','Closing and asking for payment','Payment options and scholarships','Pipeline and follow-up management','Profiling and fit check (MTNUT)','Profile mapping','Negotiation','Prospect tiering (LIP, MIP, HIP)','None'],
+    product:  ['Curriculum depth','Projects','Placement and outcomes','Competitor comparison','Pricing, cohort dates and batch details','Who the program is not for','None'],
+    soft:     ['Warnings and ZTP on the floor','Understanding consumer psychology','Rapport building','Handling difficult conversations or leads','Being authoritative on call',"Professional communication - Airtribe's brand voice",'Appropriate follow-up methods']
+  };
+
+  var picked = {callflow:[], maingap:[], sales:[], product:[], soft:[]};
+  var step = 0;
+  var steps = ['step0', 'step1', 'step2'];
+
+  /* ---- theme ---- */
+  (function(){
+    var root = document.documentElement;
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.themebtn'));
+    function apply(name){
+      if(name === 'desert'){ root.setAttribute('data-skin','desert'); root.removeAttribute('data-theme'); }
+      else {
+        root.removeAttribute('data-skin');
+        if(name === 'light' || name === 'dark'){ root.setAttribute('data-theme', name); }
+        else { root.removeAttribute('data-theme'); }
+      }
+      btns.forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-theme') === name ? 'true' : 'false'); });
+      try{ localStorage.setItem('atr-tna-skin', name); }catch(e){}
+    }
+    btns.forEach(function(b){ b.addEventListener('click', function(){ apply(b.getAttribute('data-theme')); }); });
+    var saved = '';
+    try{ saved = localStorage.getItem('atr-tna-skin') || ''; }catch(e){}
+    if(saved && saved !== 'default') apply(saved);
+  })();
+
+  /* ---- chips ---- */
+  Object.keys(OPTIONS).forEach(function(key){
+    var wrap = document.querySelector('[data-chips="' + key + '"]');
+    if(!wrap) return;
+    OPTIONS[key].forEach(function(label){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip' + (label === 'None' || label === 'Nothing significant' ? ' none' : '');
+      b.textContent = label;
+      b.setAttribute('aria-pressed', 'false');
+      b.addEventListener('click', function(){
+        var isNone = (label === 'None' || label === 'Nothing significant');
+        var on = b.getAttribute('aria-pressed') === 'true';
+        if(isNone && !on){
+          picked[key] = [label];
+          Array.prototype.forEach.call(wrap.children, function(c){ c.setAttribute('aria-pressed', c === b ? 'true' : 'false'); });
+          return;
+        }
+        if(!isNone){
+          Array.prototype.forEach.call(wrap.children, function(c){
+            if(c.classList.contains('none')) c.setAttribute('aria-pressed', 'false');
+          });
+          picked[key] = picked[key].filter(function(v){ return v !== 'None' && v !== 'Nothing significant'; });
+        }
+        if(on){ picked[key] = picked[key].filter(function(v){ return v !== label; }); }
+        else { picked[key].push(label); }
+        b.setAttribute('aria-pressed', on ? 'false' : 'true');
+      });
+      wrap.appendChild(b);
+    });
+  });
+
+  /* ---- steps ---- */
+  function note(n, kind, msg){
+    var el = document.getElementById('note' + n);
+    el.className = 'note show ' + kind;
+    el.textContent = msg;
+  }
+  function clearNote(n){
+    var el = document.getElementById('note' + n);
+    if(el){ el.className = 'note'; el.textContent = ''; }
+  }
+
+  function show(n){
+    steps.forEach(function(id, i){ document.getElementById(id).hidden = (i !== n); });
+    document.getElementById('stepDone').hidden = true;
+    Array.prototype.forEach.call(document.querySelectorAll('.railseg'), function(seg, i){
+      seg.classList.toggle('on', i === n);
+      seg.classList.toggle('past', i < n);
+    });
+    step = n;
+    window.scrollTo({top: 0, behavior: 'smooth'});
+  }
+
+  function valid(n){
+    if(n === 0){
+      if(!document.getElementById('vertical').value){ note(0, 'bad', 'Pick your vertical.'); return false; }
+      if(!document.getElementById('role').value){ note(0, 'bad', 'Pick your role.'); return false; }
+      if(!document.getElementById('tenure').value){ note(0, 'bad', 'Pick how long you have been on the floor.'); return false; }
+    }
+    clearNote(n);
+    return true;
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-go]'), function(b){
+    b.addEventListener('click', function(){
+      var target = parseInt(b.getAttribute('data-go'), 10);
+      if(target > step && !valid(step)) return;
+      show(target);
+    });
+  });
+
+  function compose(key){
+    var chosen = picked[key].slice();
+    var detail = document.querySelector('[data-detail="' + key + '"]');
+    var text = detail ? detail.value.trim() : '';
+    if(!chosen.length && !text) return '';
+    if(!text) return chosen.join(' / ');
+    if(!chosen.length) return text;
+    return chosen.join(' / ') + '\n\n' + text;
+  }
+
+  document.getElementById('submitBtn').addEventListener('click', function(){
+    var btn = this;
+    if(!valid(0)){ show(0); return; }
+
+    var stuck = document.getElementById('stuck').value.trim();
+    if(stuck.length < 5){ return note(2, 'bad', 'Give us the one prospect question you are still stuck on — it is the most useful answer on this form.'); }
+
+    var body = new URLSearchParams();
+    body.append(FIELD.marker, 'Anonymous self-report');
+    body.append(FIELD.vertical, document.getElementById('vertical').value);
+    body.append(FIELD.role, document.getElementById('role').value);
+    body.append(FIELD.tenure, document.getElementById('tenure').value);
+    ['callflow', 'maingap', 'sales', 'product', 'soft'].forEach(function(k){
+      body.append(FIELD[k], compose(k));
+    });
+    body.append(FIELD.stuck, stuck);
+    body.append(FIELD.unused, document.getElementById('unused').value.trim());
+    body.append(FIELD.improve, document.getElementById('improve').value.trim());
+
+    btn.disabled = true;
+    note(2, 'info', 'Sending...');
+
+    fetch(FORM_ACTION, { method: 'POST', mode: 'no-cors', body: body })
+      .then(function(){
+        steps.forEach(function(id){ document.getElementById(id).hidden = true; });
+        document.getElementById('stepDone').hidden = false;
+        Array.prototype.forEach.call(document.querySelectorAll('.railseg'), function(seg){
+          seg.classList.remove('on'); seg.classList.add('past');
+        });
+        window.scrollTo({top: 0, behavior: 'smooth'});
+      })
+      .catch(function(){
+        btn.disabled = false;
+        note(2, 'bad', 'That did not send. Check your connection and try once more.');
+      });
+  });
+
+  show(0);
+})();
+</script>
+</body>
+</html>
