@@ -172,7 +172,57 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
 .done h2{font-family:var(--display);font-size:25px;font-weight:600;letter-spacing:-.03em}
 .done p{font-size:14.5px;color:var(--ink-soft);max-width:46ch}
 
-.foot{margin-top:26px;font-size:12.5px;color:var(--muted);text-align:center;font-weight:500}
+.foot{margin-top:26px;font-size:12.5px;color:var(--muted);text-align:center;font-weight:500;display:flex;flex-direction:column;gap:7px;align-items:center}
+.footlink{background:none;border:none;padding:0;font-size:12px;font-weight:700;color:var(--muted);text-decoration:underline;text-underline-offset:3px;opacity:.75}
+.footlink:hover{color:var(--accent-ink);opacity:1}
+
+/* ---------- trainer dashboard ---------- */
+.gate{max-width:420px;margin:0 auto}
+.gate .card{text-align:left}
+.gate .lock{width:46px;height:46px;border-radius:50%;background:var(--accent-soft);color:var(--accent-ink);display:grid;place-items:center;margin-bottom:14px}
+.gate h2{font-family:var(--display);font-size:21px;font-weight:600;letter-spacing:-.025em;margin-bottom:5px}
+.gate p{font-size:13.5px;color:var(--ink-soft);margin-bottom:17px}
+#gateCode{font-family:var(--display);font-size:17px;letter-spacing:.14em;text-align:center;text-transform:uppercase;font-weight:600}
+
+.dashhead{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.dashhead h2{font-family:var(--display);font-size:clamp(22px,3.4vw,30px);font-weight:600;letter-spacing:-.03em;line-height:1.1}
+.dashhead .sub{font-size:13.5px;color:var(--muted);margin-top:3px}
+.dashacts{display:flex;gap:7px;flex-wrap:wrap}
+.minibtn{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:8px 14px;font-size:13px;font-weight:700;color:var(--ink-soft);transition:border-color .18s,color .18s,transform .18s}
+.minibtn:hover{border-color:var(--accent);color:var(--accent-ink);transform:translateY(-1px)}
+.minibtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:12px;margin-bottom:16px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px 16px;display:flex;flex-direction:column;gap:3px}
+.kpi .n{font-family:var(--display);font-size:29px;font-weight:600;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.kpi .l{font-size:11.5px;font-weight:600;color:var(--muted);line-height:1.3}
+.kpi.urgent{border-left:3px solid var(--live)}
+.kpi.urgent .n{color:var(--live)}
+
+.panels{display:grid;grid-template-columns:repeat(auto-fit,minmax(252px,1fr));gap:13px;margin-bottom:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px 17px}
+.panel h3{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:12px}
+.bars{display:flex;flex-direction:column;gap:9px}
+.barrow{display:flex;flex-direction:column;gap:4px}
+.barlab{display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:600}
+.barlab span:last-child{color:var(--muted);font-variant-numeric:tabular-nums;flex:none}
+.bartrack{height:7px;background:var(--surface-2);border-radius:99px;overflow:hidden}
+.barfill{display:block;height:100%;background:var(--accent);border-radius:99px;width:0;transition:width .6s cubic-bezier(.3,.8,.3,1)}
+.barfill.hot{background:var(--live)}
+
+.respwrap{display:flex;flex-direction:column;gap:11px}
+.resp{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 18px;animation:riseIn .35s cubic-bezier(.2,.75,.3,1) backwards}
+.resp-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px;padding-bottom:11px;border-bottom:1px solid var(--line)}
+.tag{font-size:11px;font-weight:700;border-radius:99px;padding:4px 10px;background:var(--surface-2);color:var(--ink-soft)}
+.tag.time{background:transparent;color:var(--muted);padding-left:0;font-variant-numeric:tabular-nums}
+.tag.now{background:var(--live-soft);color:var(--live)}
+.qa{display:flex;flex-direction:column;gap:3px;margin-bottom:11px}
+.qa:last-child{margin-bottom:0}
+.qa .q{font-size:10.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.qa .a{font-size:14px;line-height:1.5;white-space:pre-wrap;overflow-wrap:break-word}
+.chiprow{display:flex;flex-wrap:wrap;gap:5px;margin-top:2px}
+.minichip{font-size:11.5px;font-weight:600;background:var(--accent-soft);color:var(--accent-ink);border-radius:99px;padding:3px 9px}
+.empty{text-align:center;padding:36px 20px;color:var(--muted);font-size:14px;border:1px dashed var(--line-strong);border-radius:13px}
 
 /* Phones: bigger tap targets, full-width actions, no cramped gutters */
 @media (max-width:640px){
@@ -393,7 +443,53 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
       </div>
     </section>
 
-    <div class="foot">Learning &amp; Development, Airtribe</div>
+    <div class="foot">
+      <span>Learning &amp; Development, Airtribe</span>
+      <button type="button" class="footlink" id="trainerLink">Trainer view</button>
+    </div>
+  </div>
+</main>
+
+<!-- trainer gate -->
+<main class="main gate" id="gateView" hidden>
+  <div class="inner">
+    <div class="card">
+      <span class="lock" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </span>
+      <h2>Trainer view</h2>
+      <p>Responses from the floor are candid, so this is open only to the training team. Enter the access code.</p>
+      <div class="q" style="padding-top:0;border:none">
+        <label class="qlabel" for="gateCode">Access code</label>
+        <input id="gateCode" type="password" autocomplete="off" spellcheck="false" placeholder="••••••••••••">
+      </div>
+      <div class="nav">
+        <button type="button" class="btn" id="gateBack">Back to form</button>
+        <button type="button" class="btn primary" id="gateGo">Open dashboard</button>
+      </div>
+      <div class="note" id="gateNote"></div>
+    </div>
+  </div>
+</main>
+
+<!-- trainer dashboard -->
+<main class="main" id="dashView" hidden>
+  <div class="inner">
+    <div class="dashhead">
+      <div>
+        <h2>Floor gap responses</h2>
+        <div class="sub" id="dashSub">Loading…</div>
+      </div>
+      <div class="dashacts">
+        <button type="button" class="minibtn" id="dashRefresh">Refresh</button>
+        <button type="button" class="minibtn" id="dashSheet">Open sheet</button>
+        <button type="button" class="minibtn" id="dashOut">Sign out</button>
+      </div>
+    </div>
+
+    <div class="kpis" id="dashKpis"></div>
+    <div class="panels" id="dashPanels"></div>
+    <div class="respwrap" id="dashResponses"></div>
   </div>
 </main>
 
@@ -581,6 +677,289 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--accent);
   });
 
   show(0);
+
+  /* ================== trainer dashboard ================== */
+
+  var SHEET_URL = 'https://docs.google.com/spreadsheets/d/1ShBgF2DFYS83bLfEbt0f_ZoZyB9Blc2-lDMgO5hhh1g/edit';
+  var formView = document.querySelector('main.main');
+  var gateView = document.getElementById('gateView');
+  var dashView = document.getElementById('dashView');
+  var gateNote = document.getElementById('gateNote');
+  var lastRows = [];
+
+  /* The code is held for this tab only, so a shared machine does not keep it. */
+  function heldCode(v){
+    try{
+      if(v === undefined) return sessionStorage.getItem('atr-tna-code') || '';
+      if(v === null){ sessionStorage.removeItem('atr-tna-code'); return ''; }
+      sessionStorage.setItem('atr-tna-code', v); return v;
+    }catch(e){ return ''; }
+  }
+
+  function view(which){
+    formView.hidden = which !== 'form';
+    gateView.hidden = which !== 'gate';
+    dashView.hidden = which !== 'dash';
+    document.querySelector('.privacy').parentElement.hidden = which !== 'form';
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+
+  document.getElementById('trainerLink').addEventListener('click', function(){
+    location.hash = 'trainer';
+    route();
+  });
+  document.getElementById('gateBack').addEventListener('click', function(){
+    location.hash = '';
+    view('form');
+  });
+  document.getElementById('dashOut').addEventListener('click', function(){
+    heldCode(null);
+    location.hash = '';
+    view('form');
+  });
+  document.getElementById('dashSheet').addEventListener('click', function(){
+    window.open(SHEET_URL, '_blank', 'noopener');
+  });
+  document.getElementById('dashRefresh').addEventListener('click', function(){
+    fetchRows(heldCode(), true);
+  });
+  document.getElementById('gateGo').addEventListener('click', function(){
+    var code = document.getElementById('gateCode').value.trim();
+    if(code.length < 6){ return note2(gateNote, 'bad', 'Enter the access code.'); }
+    fetchRows(code, false);
+  });
+  document.getElementById('gateCode').addEventListener('keydown', function(e){
+    if(e.key === 'Enter') document.getElementById('gateGo').click();
+  });
+
+  function note2(el, kind, msg){
+    el.className = 'note show ' + kind;
+    el.textContent = msg;
+  }
+
+  function fetchRows(code, silent){
+    if(!code) return;
+    if(!silent) note2(gateNote, 'info', 'Checking…');
+    var btn = document.getElementById('gateGo');
+    btn.disabled = true;
+
+    fetch(ENDPOINT, {
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify({action:'nr.tnaRead', code: code})
+    })
+      .then(function(r){ return r.json(); })
+      .then(function(res){
+        btn.disabled = false;
+        if(!res || res.ok !== true){
+          heldCode(null);
+          view('gate');
+          return note2(gateNote, 'bad', res && res.error === 'bad_code'
+            ? 'That code is not right.'
+            : 'Could not load the responses. Try again.');
+        }
+        heldCode(code);
+        gateNote.className = 'note';
+        lastRows = res.rows || [];
+        render(lastRows);
+        view('dash');
+      })
+      .catch(function(){
+        btn.disabled = false;
+        note2(gateNote, 'bad', 'Could not reach the tracker. Check your connection.');
+      });
+  }
+
+  /* Stored answers are "chip / chip" then a blank line then free text. */
+  function split(cell){
+    var parts = String(cell || '').split('\n\n');
+    var chips = parts[0] ? parts[0].split(' / ').map(function(s){ return s.trim(); }).filter(Boolean) : [];
+    var text = parts.slice(1).join('\n\n').trim();
+    if(!text && chips.length === 1 && chips[0].length > 60){ return {chips:[], text:chips[0]}; }
+    return {chips:chips, text:text};
+  }
+
+  function tally(rows, idx){
+    var counts = {};
+    rows.forEach(function(r){
+      split(r[idx]).chips.forEach(function(c){ counts[c] = (counts[c] || 0) + 1; });
+    });
+    return Object.keys(counts).map(function(k){ return {label:k, n:counts[k]}; })
+      .sort(function(a,b){ return b.n - a.n; });
+  }
+
+  function countBy(rows, idx){
+    var counts = {};
+    rows.forEach(function(r){
+      var v = String(r[idx] || '').trim();
+      if(v) counts[v] = (counts[v] || 0) + 1;
+    });
+    return Object.keys(counts).map(function(k){ return {label:k, n:counts[k]}; })
+      .sort(function(a,b){ return b.n - a.n; });
+  }
+
+  function bars(items, total, hotTest){
+    var wrap = document.createElement('div');
+    wrap.className = 'bars';
+    if(!items.length){
+      var none = document.createElement('div');
+      none.style.cssText = 'font-size:13px;color:var(--muted)';
+      none.textContent = 'Nothing flagged yet.';
+      wrap.appendChild(none);
+      return wrap;
+    }
+    items.forEach(function(it){
+      var row = document.createElement('div');
+      row.className = 'barrow';
+      var lab = document.createElement('div');
+      lab.className = 'barlab';
+      var a = document.createElement('span'); a.textContent = it.label;
+      var b = document.createElement('span'); b.textContent = it.n;
+      lab.appendChild(a); lab.appendChild(b);
+      var track = document.createElement('div');
+      track.className = 'bartrack';
+      var fill = document.createElement('i');
+      fill.className = 'barfill' + (hotTest && hotTest(it.label) ? ' hot' : '');
+      track.appendChild(fill);
+      row.appendChild(lab); row.appendChild(track);
+      wrap.appendChild(row);
+      requestAnimationFrame(function(){
+        fill.style.width = Math.round(it.n / Math.max(1,total) * 100) + '%';
+      });
+    });
+    return wrap;
+  }
+
+  function panel(title, node){
+    var p = document.createElement('div');
+    p.className = 'panel';
+    var h = document.createElement('h3');
+    h.textContent = title;
+    p.appendChild(h); p.appendChild(node);
+    return p;
+  }
+
+  var COL = {
+    time:0, vertical:1, role:2, tenure:3, callflow:4, maingap:5, sales:6,
+    product:7, soft:8, stuck:9, unused:10, improve:11, urgency:12
+  };
+
+  function render(rows){
+    var total = rows.length;
+    var urgent = rows.filter(function(r){ return /immediately/i.test(r[COL.urgency]); }).length;
+    var pre = rows.filter(function(r){ return /Pre-sales/i.test(r[COL.role]); }).length;
+
+    document.getElementById('dashSub').textContent = total === 0
+      ? 'No responses yet'
+      : total + (total === 1 ? ' response' : ' responses') + ' · anonymous · updates as they come in';
+
+    var kpis = document.getElementById('dashKpis');
+    kpis.innerHTML = '';
+    [
+      {n: total, l: 'Responses in'},
+      {n: urgent, l: 'Need a refresher immediately', cls: 'urgent'},
+      {n: pre, l: 'Pre-sales (BDA)'},
+      {n: total - pre, l: 'Full sales (BDE)'}
+    ].forEach(function(k){
+      var d = document.createElement('div');
+      d.className = 'kpi' + (k.cls ? ' ' + k.cls : '');
+      var n = document.createElement('span'); n.className = 'n'; n.textContent = k.n;
+      var l = document.createElement('span'); l.className = 'l'; l.textContent = k.l;
+      d.appendChild(n); d.appendChild(l);
+      kpis.appendChild(d);
+    });
+
+    var panels = document.getElementById('dashPanels');
+    panels.innerHTML = '';
+    panels.appendChild(panel('Refresher urgency', bars(countBy(rows, COL.urgency), total, function(l){ return /immediately/i.test(l); })));
+    panels.appendChild(panel('Vertical', bars(countBy(rows, COL.vertical), total)));
+    panels.appendChild(panel('Time on the floor', bars(countBy(rows, COL.tenure), total)));
+    panels.appendChild(panel('Sales gaps', bars(tally(rows, COL.sales), total)));
+    panels.appendChild(panel('Product and program gaps', bars(tally(rows, COL.product), total)));
+    panels.appendChild(panel('Soft skills gaps', bars(tally(rows, COL.soft), total)));
+    panels.appendChild(panel('Main gap area', bars(tally(rows, COL.maingap), total)));
+    panels.appendChild(panel('Call flow differences', bars(tally(rows, COL.callflow), total)));
+
+    var wrap = document.getElementById('dashResponses');
+    wrap.innerHTML = '';
+    if(!total){
+      var e = document.createElement('div');
+      e.className = 'empty';
+      e.textContent = 'Nothing has come in yet. Responses appear here the moment they are submitted.';
+      wrap.appendChild(e);
+      return;
+    }
+
+    rows.slice().reverse().forEach(function(r, i){
+      var card = document.createElement('div');
+      card.className = 'resp';
+      card.style.animationDelay = Math.min(i * 30, 240) + 'ms';
+
+      var top = document.createElement('div');
+      top.className = 'resp-top';
+      [[r[COL.vertical], ''], [r[COL.role], ''], [r[COL.tenure], ''],
+       [r[COL.urgency], /immediately/i.test(r[COL.urgency]) ? 'now' : '']].forEach(function(t){
+        if(!t[0]) return;
+        var s = document.createElement('span');
+        s.className = 'tag' + (t[1] ? ' ' + t[1] : '');
+        s.textContent = t[0];
+        top.appendChild(s);
+      });
+      var time = document.createElement('span');
+      time.className = 'tag time';
+      time.textContent = r[COL.time] || '';
+      top.appendChild(time);
+      card.appendChild(top);
+
+      [['Call flow differences', COL.callflow],
+       ['Main gap: training vs floor', COL.maingap],
+       ['Sales gaps', COL.sales],
+       ['Product and program gaps', COL.product],
+       ['Soft skills and communication gaps', COL.soft],
+       ['Prospect question without a solid answer', COL.stuck],
+       ['Covered in training, never used', COL.unused],
+       ['Improvements for the training team', COL.improve]].forEach(function(f){
+        var parsed = split(r[f[1]]);
+        if(!parsed.chips.length && !parsed.text) return;
+        var qa = document.createElement('div');
+        qa.className = 'qa';
+        var q = document.createElement('div');
+        q.className = 'q'; q.textContent = f[0];
+        qa.appendChild(q);
+        if(parsed.chips.length){
+          var cr = document.createElement('div');
+          cr.className = 'chiprow';
+          parsed.chips.forEach(function(c){
+            var mc = document.createElement('span');
+            mc.className = 'minichip'; mc.textContent = c;
+            cr.appendChild(mc);
+          });
+          qa.appendChild(cr);
+        }
+        if(parsed.text){
+          var a = document.createElement('div');
+          a.className = 'a'; a.textContent = parsed.text;
+          qa.appendChild(a);
+        }
+        card.appendChild(qa);
+      });
+
+      wrap.appendChild(card);
+    });
+  }
+
+  function route(){
+    if(location.hash.replace('#','') === 'trainer'){
+      var held = heldCode();
+      if(held){ view('dash'); fetchRows(held, true); }
+      else { view('gate'); document.getElementById('gateCode').focus(); }
+    } else {
+      view('form');
+    }
+  }
+
+  window.addEventListener('hashchange', route);
+  route();
 })();
 </script>
 </body>
