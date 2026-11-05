@@ -135,7 +135,7 @@ button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
   background:#fff;border-radius:12px;padding:11px 20px;display:inline-flex;align-items:center;
   box-shadow:0 6px 20px rgba(0,0,0,.18);position:relative;overflow:hidden;
 }
-.logo-chip img{display:block;width:118px;height:auto;position:relative;z-index:1}
+.logo-chip img{display:block;height:36px;width:auto;position:relative;z-index:1}
 .logo-chip::after{
   content:"";position:absolute;top:0;bottom:0;left:0;width:45%;z-index:2;
   background:linear-gradient(100deg,transparent,rgba(255,255,255,.75),transparent);
@@ -483,7 +483,7 @@ button{font-family:inherit;font-size:inherit;color:inherit;cursor:pointer}
   <div class="inner">
     <div class="toprow r1">
       <span class="logo-chip">
-        <img src="data:image/png;base64,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" alt="Airtribe" width="118" height="44" style="display:block;position:relative;z-index:1">
+        <img src="airtribe-logo.png" alt="Airtribe" height="36" style="display:block;position:relative;z-index:1;width:auto">
       </span>
       <span class="toprow-right">
         <span class="themeset" id="themeSet" role="group" aria-label="Theme">
